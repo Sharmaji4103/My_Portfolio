@@ -20,15 +20,16 @@
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 24px;
+      font-size: 4vw;
       font-weight: bold;
       color: white;
       background-color: rgba(0, 0, 0, 0.6);
-      padding: 15px 25px;
+      padding: 10px 20px;
       border-radius: 10px;
       z-index: 5;
       opacity: 0;
       transition: opacity 1s ease-in-out;
+      text-align: center;
     }
 
     .buttons {
@@ -37,19 +38,23 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
 
     .btn {
-      padding: 15px 30px;
-      font-size: 18px;
+      padding: 12px 20px;
+      font-size: 4vw;
       border: none;
       background-color: #ffffffcc;
       cursor: pointer;
       border-radius: 10px;
       transition: background-color 0.3s;
+      flex: 1 1 auto;
+      min-width: 120px;
     }
 
     .btn:hover {
@@ -60,7 +65,8 @@
       position: absolute;
       bottom: 100px;
       right: -250px;
-      width: 150px;
+      width: 30vw;
+      max-width: 150px;
       transition: right 3s ease-in-out, left 2s ease-in-out;
     }
 
@@ -68,14 +74,14 @@
       position: absolute;
       bottom: 250px;
       left: 0;
-      max-width: 80vw;
+      max-width: 85vw;
       min-height: 100px;
       background: white;
       padding: 15px 20px;
       border-radius: 15px;
       border: 2px solid #333;
-      font-size: 16px;
-      line-height: 1.8;
+      font-size: 3.8vw;
+      line-height: 1.6;
       display: none;
       z-index: 10;
       box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
@@ -92,6 +98,21 @@
       border-width: 10px;
       border-style: solid;
       border-color: white transparent transparent transparent;
+    }
+
+    @media (min-width: 768px) {
+      #intro {
+        font-size: 24px;
+      }
+
+      .btn {
+        font-size: 18px;
+        padding: 15px 30px;
+      }
+
+      #speech-bubble {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -113,6 +134,7 @@
   <!-- Speech Bubble -->
   <div id="speech-bubble"></div>
 
+  <!-- Buttons -->
   <div class="buttons">
     <button class="btn" onclick="moveCharacterTo(this, 'about')">About Me</button>
     <button class="btn" onclick="moveCharacterTo(this, 'projects')">Projects</button>
