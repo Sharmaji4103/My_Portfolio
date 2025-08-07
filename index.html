@@ -1,102 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jatin Sharma - Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jatin Sharma Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom, #3f87a6, #ebf8e1);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    #intro {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 15px 25px;
+      border-radius: 10px;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .buttons {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      background-color: #ffffffcc;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #dddddd;
+    }
+
+    #character {
+      position: absolute;
+      bottom: 100px;
+      right: -250px;
+      width: 150px;
+      transition: right 3s ease-in-out, left 2s ease-in-out;
+    }
+
+    #speech-bubble {
+      position: absolute;
+      bottom: 250px;
+      left: 0;
+      max-width: 80vw;
+      min-height: 100px;
+      background: white;
+      padding: 15px 20px;
+      border-radius: 15px;
+      border: 2px solid #333;
+      font-size: 16px;
+      line-height: 1.8;
+      display: none;
+      z-index: 10;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow: auto;
+    }
+
+    #speech-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 30px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+    }
+  </style>
 </head>
 <body>
-  <!-- Header Section -->
-  <header>
-    <div class="container">
-      <h1>Jatin Sharma</h1>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <!-- Home Section -->
-  <section id="home" class="section">
-    <div class="container">
-      <div class="intro">
-        <img src="pic1.jpg" alt="Photo of Jatin Sharma" class="profile-pic">
-        <h2>Hello, I'm</h2>
-        <h1>Jatin Sharma</h1>
-        <p>Web Developer and MCA Student</p>
-        <div class="buttons">
-          <a href="Jatin_cv.pdf" class="btn" download>Download CV</a>
-          <a href="#contact" class="btn">Contact Info</a>
-        </div>
-        <div class="social-links">
-          <a href="https://www.linkedin.com/in/sharma-jatin-54717524b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">LinkedIn</a>
-          
-        </div>
-      </div>
-    </div>
-  </section>
+  <div id="intro">Hi, I’m Jatin Sharma – Web Developer</div>
 
-  <!-- About Section -->
-  <section id="about" class="section">
-    <div class="container">
-      <h2>About Me</h2>
-      <div class="about-info">
-        <p>A motivated and detail-oriented MCA student with a strong 
-foundation in programming and software development. Seeking to 
-leverage my skills in C, Java, and web development to contribute 
-effectively to a dynamic team environment. .</p>
-        <div class="cards">
-          <div class="card">
-            <h3>Experience</h3>
-            <p>3 Months Internship:<br> As Custom Software Development </p>
-          </div>
-          <div class="card">
-            <h3>Education</h3>
-            <p>BCA Degree at ITM University<br>MCA at ITM University</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Walking Character -->
+  <lottie-player
+    id="character"
+    src="https://assets9.lottiefiles.com/packages/lf20_pprxh53t.json"
+    background="transparent"
+    speed="1"
+    style="height: 200px;"
+    loop
+    autoplay
+  ></lottie-player>
 
-  <!-- Projects Section -->
-  <section id="projects" class="section">
-    <div class="container">
-      <h2>My Projects</h2>
-      <div class="project-cards">
-        <div class="project">
-          <img src="pic2.jpg" alt="Facial Attendance System Project">
-          <h3>Facial Attendance System</h3>
-          <a href="https://github.com/Sharmaji4103/attendance.git">GitHub</a>
-        </div>
-        <div class="project">
-          <img src="pic3.jpg" alt="Hostel Management System Project">
-          <h3>Hostel Management System</h3>
-          <a href="https://github.com/Sharmaji4103/Hostel_management." target="_blank">GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Speech Bubble -->
+  <div id="speech-bubble"></div>
 
-  <!-- Contact Section -->
-  <section id="contact" class="section">
-    <div class="container">
-      <h2>Contact Me</h2>
-      <p>Email: Jatinsharma4103@gmail.com </p>
-      <p>Phone: +91 8758841041</p>
-    </div>
-  </section>
+  <div class="buttons">
+    <button class="btn" onclick="moveCharacterTo(this, 'about')">About Me</button>
+    <button class="btn" onclick="moveCharacterTo(this, 'projects')">Projects</button>
+    <button class="btn" onclick="moveCharacterTo(this, 'contact')">Contact</button>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2024 Jatin Sharma. All rights reserved.</p>
-    </div>
-  </footer>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <script>
+    const character = document.getElementById("character");
+    const intro = document.getElementById("intro");
+    const buttons = document.querySelector(".buttons");
+    const bubble = document.getElementById("speech-bubble");
+
+    const aboutLines = [
+      "👋 Hello! I'm Jatin Sharma.",
+      "",
+      "🎓 A motivated and detail-oriented MCA graduate.",
+      "",
+      "💡 I have a strong foundation in programming and software development.",
+      "",
+      "🧠 Skilled in:",
+      "• React",
+      "• PHP",
+      "• MySQL",
+      "• Java",
+      "• Web Development",
+      "",
+      "🚀 I aim to contribute effectively to a dynamic team environment."
+    ];
+
+    const projectLines = [
+  "💻 My Projects:",
+  "",
+  "📌 Facial Attendance System:",
+  "🔗 GitHub: https://github.com/Sharmaji4103/attendance.git",
+  "",
+  "📌 Hostel Management System:",
+  "🔗 GitHub: https://github.com/Sharmaji4103/Hostel_management",
+  "",
+  "📌 Hotstar Clone (Frontend):",
+  "🔗 Live Demo: https://sharmaji4103.github.io/Hotstar/#",
+  "🔗 GitHub: https://github.com/Sharmaji4103/Hotstar.git"
+];
+
+
+    window.onload = () => {
+      setTimeout(() => {
+        character.style.right = "calc(50% - 75px)";
+      }, 500);
+
+      setTimeout(() => {
+        intro.style.opacity = 1;
+        buttons.style.opacity = 1;
+      }, 3500);
+    };
+
+    function speakText(text) {
+      if ('speechSynthesis' in window && text.trim() !== '') {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        speechSynthesis.speak(utterance);
+      }
+    }
+
+    function moveCharacterTo(button, action) {
+      const buttonRect = button.getBoundingClientRect();
+      const newLeft = buttonRect.left + buttonRect.width / 2 - 75;
+      character.style.right = "auto";
+      character.style.left = `${newLeft}px`;
+
+      bubble.style.display = "none";
+      bubble.innerText = "";
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      let lines = [];
+
+      if (action === "about") {
+        lines = aboutLines;
+      } else if (action === "projects") {
+        lines = projectLines;
+      } else if (action === "contact") {
+        lines = [
+          "📧 Contact Me:8758841041",
+          "",
+          "Email: jatinsharma4103@gmail.com",
+          "GitHub: https://github.com/Sharmaji4103",
+          "LinkedIn: https://linkedin.com/in/sharma-jatin-54717524b"
+        ];
+      }
+
+      setTimeout(() => {
+        const charRect = character.getBoundingClientRect();
+        let bubbleLeft = charRect.left - 50;
+        if (bubbleLeft < 10) bubbleLeft = 10;
+        if (bubbleLeft + 320 > window.innerWidth) {
+          bubbleLeft = window.innerWidth - 330;
+        }
+
+        bubble.style.left = `${bubbleLeft}px`;
+        bubble.style.display = "block";
+
+        let currentLine = 0;
+
+        function typeLine() {
+          if (currentLine >= lines.length) return;
+
+          let line = lines[currentLine];
+          let i = 0;
+
+          if (currentLine > 0) bubble.innerText += "\n";
+
+          function typeChar() {
+            if (i < line.length) {
+              bubble.innerText += line[i];
+              i++;
+              setTimeout(typeChar, 20);
+            } else {
+              speakText(line);
+              currentLine++;
+              setTimeout(typeLine, 800);
+            }
+          }
+
+          typeChar();
+        }
+
+        typeLine();
+      }, 1000);
+    }
+  </script>
+
 </body>
 </html>
-
