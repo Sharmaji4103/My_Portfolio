@@ -116,6 +116,7 @@
   <div class="buttons">
     <button class="btn" onclick="moveCharacterTo(this, 'about')">About Me</button>
     <button class="btn" onclick="moveCharacterTo(this, 'projects')">Projects</button>
+    <button class="btn" onclick="moveCharacterTo(this, 'experience')">Experience</button>
     <button class="btn" onclick="moveCharacterTo(this, 'contact')">Contact</button>
   </div>
 
@@ -145,19 +146,32 @@
     ];
 
     const projectLines = [
-  "💻 My Projects:",
-  "",
-  "📌 Facial Attendance System:",
-  "🔗 GitHub: https://github.com/Sharmaji4103/attendance.git",
-  "",
-  "📌 Hostel Management System:",
-  "🔗 GitHub: https://github.com/Sharmaji4103/Hostel_management",
-  "",
-  "📌 Hotstar Clone (Frontend):",
-  "🔗 Live Demo: https://sharmaji4103.github.io/Hotstar/#",
-  "🔗 GitHub: https://github.com/Sharmaji4103/Hotstar.git"
-];
+      "💻 My Projects:",
+      "",
+      "📌 Facial Attendance System:",
+      "🔗 GitHub: https://github.com/Sharmaji4103/attendance.git",
+      "",
+      "📌 Hostel Management System:",
+      "🔗 GitHub: https://github.com/Sharmaji4103/Hostel_management",
+      "",
+      "📌 Hotstar Clone (Frontend):",
+      "🔗 Live Demo: https://sharmaji4103.github.io/Hotstar/#",
+      "🔗 GitHub: https://github.com/Sharmaji4103/Hotstar.git"
+    ];
 
+    const experienceLines = [
+      "🧑‍💼 Experience:",
+      "",
+      "💼 3 Months Internship:",
+      "• Web Developer at Arth Technology",
+      "",
+      "💼 3 Months Internship:",
+      "• Web Developer at MGVCL",
+      "",
+      "📂 Live Project:",
+      "• Disaster Management System",
+      "• Assigned by MGVCL Baroda"
+    ];
 
     window.onload = () => {
       setTimeout(() => {
@@ -197,9 +211,11 @@
         lines = aboutLines;
       } else if (action === "projects") {
         lines = projectLines;
+      } else if (action === "experience") {
+        lines = experienceLines;
       } else if (action === "contact") {
         lines = [
-          "📧 Contact Me:8758841041",
+          "📧 Contact Me: 8758841041",
           "",
           "Email: jatinsharma4103@gmail.com",
           "GitHub: https://github.com/Sharmaji4103",
