@@ -1,290 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jatin Sharma Portfolio</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      background: linear-gradient(to bottom, #3f87a6, #ebf8e1);
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      position: relative;
-    }
-
-    #intro {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 4vw;
-      font-weight: bold;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 10px 20px;
-      border-radius: 10px;
-      z-index: 5;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      text-align: center;
-    }
-
-    .buttons {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .btn {
-      padding: 12px 20px;
-      font-size: 4vw;
-      border: none;
-      background-color: #ffffffcc;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: background-color 0.3s;
-      flex: 1 1 auto;
-      min-width: 120px;
-    }
-
-    .btn:hover {
-      background-color: #dddddd;
-    }
-
-    #character {
-      position: absolute;
-      bottom: 100px;
-      right: -250px;
-      width: 30vw;
-      max-width: 150px;
-      transition: right 3s ease-in-out, left 2s ease-in-out;
-    }
-
-    #speech-bubble {
-      position: absolute;
-      bottom: 250px;
-      left: 0;
-      max-width: 85vw;
-      min-height: 100px;
-      background: white;
-      padding: 15px 20px;
-      border-radius: 15px;
-      border: 2px solid #333;
-      font-size: 3.8vw;
-      line-height: 1.6;
-      display: none;
-      z-index: 10;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow: auto;
-    }
-
-    #speech-bubble::after {
-      content: "";
-      position: absolute;
-      bottom: -20px;
-      left: 30px;
-      border-width: 10px;
-      border-style: solid;
-      border-color: white transparent transparent transparent;
-    }
-
-    @media (min-width: 768px) {
-      #intro {
-        font-size: 24px;
-      }
-
-      .btn {
-        font-size: 18px;
-        padding: 15px 30px;
-      }
-
-      #speech-bubble {
-        font-size: 16px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jatin Sharma - Web Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav id="navbar">
+        <div class="logo">JS</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#projects">Projects</a></li>
+        </ul>
+        <button class="contact-btn" id="contactBtn">Get in Touch</button>
+    </nav>
 
-  <div id="intro">Hi, I’m Jatin Sharma – Web Developer</div>
+    <section class="hero-section" id="home">
+        <div class="parallax-bg"></div>
+        
+        <div class="floating-shapes">
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
+            <div class="shape shape3"></div>
+        </div>
 
-  <!-- Walking Character -->
-  <lottie-player
-    id="character"
-    src="https://assets9.lottiefiles.com/packages/lf20_pprxh53t.json"
-    background="transparent"
-    speed="1"
-    style="height: 200px;"
-    loop
-    autoplay
-  ></lottie-player>
+        <div class="code-lines">
+            <div class="code-line" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="code-line" style="left: 30%; animation-delay: 2s;"></div>
+            <div class="code-line" style="left: 50%; animation-delay: 4s;"></div>
+            <div class="code-line" style="left: 70%; animation-delay: 6s;"></div>
+            <div class="code-line" style="left: 90%; animation-delay: 8s;"></div>
+        </div>
 
-  <!-- Speech Bubble -->
-  <div id="speech-bubble"></div>
+        <div class="hero-content">
+            <div class="greeting">ðŸ‘‹ Hello, I'm</div>
+            <h1 class="hero-title">Jatin Sharma</h1>
+            <h2 class="hero-title gradient-text">Web Developer</h2>
+            <p class="hero-description">
+                Full-stack developer specializing in React.js, Laravel, and WordPress. Building scalable web solutions 
+                with expertise in PHP, MySQL, and modern JavaScript frameworks. Passionate about creating efficient 
+                systems that enhance user experience.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">
+                    <i class="fas fa-code"></i>
+                    View My Work
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i>
+                    Let's Connect
+                </a>
+            </div>
+        </div>
+    </section>
 
-  <!-- Buttons -->
-  <div class="buttons">
-    <button class="btn" onclick="moveCharacterTo(this, 'about')">About Me</button>
-    <button class="btn" onclick="moveCharacterTo(this, 'projects')">Projects</button>
-    <button class="btn" onclick="moveCharacterTo(this, 'experience')">Experience</button>
-    <button class="btn" onclick="moveCharacterTo(this, 'contact')">Contact</button>
-  </div>
+    <section class="experience-section" id="experience">
+        <div class="section-header">
+            <span class="section-tag">MY JOURNEY</span>
+            <h2 class="section-title">Work Experience</h2>
+            <p class="section-description">
+                Building impactful solutions and gaining hands-on experience in real-world projects
+            </p>
+        </div>
 
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="company-name">
+                        <i class="fas fa-building"></i>
+                        SeoWebPlanet
+                    </div>
+                    <div class="job-title">Junior Web Developer</div>
+                    <div class="job-duration">
+                        <i class="far fa-calendar-alt"></i>
+                        Nov 2025 - Present Â· Vadodara, Gujarat
+                    </div>
+                    <div class="job-description">
+                        <ul>
+                            <li>Developed and managed 5+ PHP & WordPress websites, handling SEO optimization, SMTP configuration, and WooCommerce integration</li>
+                            <li>Communicated directly with clients to gather requirements and deliver technical solutions</li>
+                            <li>Implemented requested updates, enhancements, and fixes efficiently</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
 
-  <script>
-    const character = document.getElementById("character");
-    const intro = document.getElementById("intro");
-    const buttons = document.querySelector(".buttons");
-    const bubble = document.getElementById("speech-bubble");
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="company-name">
+                        <i class="fas fa-laptop-code"></i>
+                        Quantalynk Technologies Pvt. Ltd.
+                    </div>
+                    <div class="job-title">Junior Software Developer Engineer</div>
+                    <div class="job-duration">
+                        <i class="far fa-calendar-alt"></i>
+                        Aug 2025 - Oct 2025 Â· Vadodara, Gujarat
+                    </div>
+                    <div class="job-description">
+                        <ul>
+                            <li>Worked on real-time project "Billing Zero", contributing to the Contract Module for managing client-service agreements</li>
+                            <li>Developed agreement generation, digital signature approval, and automated payment workflows</li>
+                            <li>Integrated Stripe payment gateway for seamless transactions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
 
-    const aboutLines = [
-      "👋 Hello! I'm Jatin Sharma.",
-      "",
-      "🎓 A motivated and detail-oriented MCA graduate.",
-      "",
-      "💡 I have a strong foundation in programming and software development.",
-      "",
-      "🧠 Skilled in:",
-      "• React",
-      "• PHP",
-      "• MySQL",
-      "• Java",
-      "• Web Development",
-      "",
-      "🚀 I aim to contribute effectively to a dynamic team environment."
-    ];
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="company-name">
+                        <i class="fas fa-bolt"></i>
+                        MGVCL
+                    </div>
+                    <div class="job-title">Project Intern â€“ Disaster Management System</div>
+                    <div class="job-duration">
+                        <i class="far fa-calendar-alt"></i>
+                        Jan 2025 - Apr 2025 Â· Madhya Gujarat
+                    </div>
+                    <div class="job-description">
+                        <ul>
+                            <li>Designed and developed a web-based Disaster Management System using PHP and MySQL</li>
+                            <li>Implemented secure and scalable CRUD modules for Admin, Employees, and various organizational units</li>
+                            <li>Significantly improved data accuracy and operational flow across multiple districts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
 
-    const projectLines = [
-      "💻 My Projects:",
-      "",
-      "📌 Facial Attendance System:",
-      "🔗 GitHub: https://github.com/Sharmaji4103/attendance.git",
-      "",
-      "📌 Hostel Management System:",
-      "🔗 GitHub: https://github.com/Sharmaji4103/Hostel_management",
-      "",
-      "📌 Hotstar Clone (Frontend):",
-      "🔗 Live Demo: https://sharmaji4103.github.io/Hotstar/#",
-      "🔗 GitHub: https://github.com/Sharmaji4103/Hotstar.git"
-    ];
+    <section class="skills-section" id="skills">
+        <div class="section-header">
+            <span class="section-tag">TECHNICAL SKILLS</span>
+            <h2 class="section-title">My Expertise</h2>
+            <p class="section-description">
+                Technologies and tools I work with to build amazing web experiences
+            </p>
+        </div>
 
-    const experienceLines = [
-      "🧑‍💼 Experience:",
-      "",
-      "💼 3 Months Internship:",
-      "• Web Developer at Arth Technology",
-      "",
-      "💼 3 Months Internship:",
-      "• Web Developer at MGVCL",
-      "",
-      "📂 Live Project:",
-      "• Disaster Management System",
-      "• Assigned by MGVCL Baroda"
-    ];
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-react"></i></div>
+                <div class="skill-name">React.js</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-laravel"></i></div>
+                <div class="skill-name">Laravel</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-wordpress"></i></div>
+                <div class="skill-name">WordPress</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-python"></i></div>
+                <div class="skill-name">Python</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-js"></i></div>
+                <div class="skill-name">JavaScript</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-php"></i></div>
+                <div class="skill-name">PHP</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                <div class="skill-name">HTML5</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                <div class="skill-name">CSS3</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                <div class="skill-name">MySQL</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-search"></i></div>
+                <div class="skill-name">SEO</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                <div class="skill-name">Git</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-stripe"></i></div>
+                <div class="skill-name">Stripe</div>
+            </div>
+        </div>
+    </section>
 
-    window.onload = () => {
-      setTimeout(() => {
-        character.style.right = "calc(50% - 75px)";
-      }, 500);
+    <section class="education-section" id="education">
+        <div class="section-header">
+            <span class="section-tag">EDUCATION</span>
+            <h2 class="section-title">Academic Background</h2>
+            <p class="section-description">
+                My educational journey in Computer Applications
+            </p>
+        </div>
 
-      setTimeout(() => {
-        intro.style.opacity = 1;
-        buttons.style.opacity = 1;
-      }, 3500);
-    };
+        <div class="education-container">
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="education-content">
+                    <h3 class="education-degree">Master of Computer Applications (MCA)</h3>
+                    <div class="education-institution">
+                        <i class="fas fa-university"></i>
+                        ITM SLS BARODA University
+                    </div>
+                    <div class="education-details">
+                        <span class="education-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Vadodara, Gujarat
+                        </span>
+                        <span class="education-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            Graduated April 2025
+                        </span>
+                    </div>
+                    <div class="education-grade">
+                        <i class="fas fa-award"></i>
+                        CGPA: 8.6/10
+                    </div>
+                </div>
+            </div>
 
-    function speakText(text) {
-      if ('speechSynthesis' in window && text.trim() !== '') {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.9;
-        speechSynthesis.speak(utterance);
-      }
-    }
+            <div class="education-card certification-card">
+                <div class="education-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="education-content">
+                    <h3 class="education-degree">Summer International Research Internship</h3>
+                    <div class="education-institution">
+                        <i class="fas fa-university"></i>
+                        University Of West London
+                    </div>
+                    <div class="education-details">
+                        <span class="education-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            July 2021
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function moveCharacterTo(button, action) {
-      const buttonRect = button.getBoundingClientRect();
-      const newLeft = buttonRect.left + buttonRect.width / 2 - 75;
-      character.style.right = "auto";
-      character.style.left = `${newLeft}px`;
+    <section class="projects-section" id="projects">
+        <div class="section-header">
+            <span class="section-tag">MY WORK</span>
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-description">
+                A selection of projects that showcase my skills and experience
+            </p>
+        </div>
 
-      bubble.style.display = "none";
-      bubble.innerText = "";
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">
+                    <i class="fas fa-plane-departure"></i>
+                    Make Your Trip
+                </h3>
+                <a href="https://trip-sandy.vercel.app" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    View Live
+                </a>
+            </div>
+            <p class="project-description">
+                A comprehensive responsive travel booking web application with features for hotel, flight, and train bookings, 
+                along with curated holiday packages. Built with modern React.js architecture featuring smooth navigation 
+                and dynamic content rendering through reusable components and React Router.
+            </p>
+            <div class="project-tech">
+                <span class="tech-tag"><i class="fab fa-react"></i> React.js</span>
+                <span class="tech-tag"><i class="fas fa-route"></i> React Router</span>
+                <span class="tech-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="tech-tag"><i class="fab fa-js"></i> JavaScript</span>
+                <span class="tech-tag"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+            </div>
+        </div>
 
-      let lines = [];
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    Billing Zero - Contract Module
+                </h3>
+                <a href="#" class="project-link">
+                    <i class="fas fa-briefcase"></i>
+                    Enterprise Project
+                </a>
+            </div>
+            <p class="project-description">
+                Developed a comprehensive Contract Management Module for managing client-service agreements, pricing structures, 
+                taxes, discounts, and deposit details. Implemented agreement generation with digital signature approval workflow 
+                and integrated automated payment processing through Stripe gateway.
+            </p>
+            <div class="project-tech">
+                <span class="tech-tag"><i class="fab fa-php"></i> PHP</span>
+                <span class="tech-tag"><i class="fas fa-database"></i> MySQL</span>
+                <span class="tech-tag"><i class="fab fa-stripe"></i> Stripe API</span>
+                <span class="tech-tag"><i class="fas fa-signature"></i> Digital Signature</span>
+                <span class="tech-tag"><i class="fas fa-file-contract"></i> Contract Management</span>
+            </div>
+        </div>
 
-      if (action === "about") {
-        lines = aboutLines;
-      } else if (action === "projects") {
-        lines = projectLines;
-      } else if (action === "experience") {
-        lines = experienceLines;
-      } else if (action === "contact") {
-        lines = [
-          "📧 Contact Me: 8758841041",
-          "",
-          "Email: jatinsharma4103@gmail.com",
-          "GitHub: https://github.com/Sharmaji4103",
-          "LinkedIn: https://linkedin.com/in/sharma-jatin-54717524b"
-        ];
-      }
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Disaster Management System
+                </h3>
+                <a href="#" class="project-link">
+                    <i class="fas fa-shield-alt"></i>
+                    MGVCL Project
+                </a>
+            </div>
+            <p class="project-description">
+                Designed and developed a comprehensive web-based Disaster Management System for MGVCL to streamline 
+                emergency operations across multiple districts. Features secure CRUD modules for Admin, Employees, Circles, 
+                Districts, Talukas, and DSCOM units with role-based access control and real-time data management.
+            </p>
+            <div class="project-tech">
+                <span class="tech-tag"><i class="fab fa-php"></i> PHP</span>
+                <span class="tech-tag"><i class="fas fa-database"></i> MySQL</span>
+                <span class="tech-tag"><i class="fas fa-lock"></i> Secure Authentication</span>
+                <span class="tech-tag"><i class="fas fa-project-diagram"></i> CRUD Operations</span>
+                <span class="tech-tag"><i class="fas fa-chart-line"></i> Data Management</span>
+            </div>
+        </div>
+    </section>
 
-      setTimeout(() => {
-        const charRect = character.getBoundingClientRect();
-        let bubbleLeft = charRect.left - 50;
-        if (bubbleLeft < 10) bubbleLeft = 10;
-        if (bubbleLeft + 320 > window.innerWidth) {
-          bubbleLeft = window.innerWidth - 330;
-        }
+    <section class="contact-section" id="contact">
+        <div class="contact-content">
+            <span class="section-tag">GET IN TOUCH</span>
+            <h2 class="contact-title">Let's Work Together</h2>
+            <p class="contact-text">
+                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                Based in Godhra, Gujarat, India.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:jatinsharma4103@gmail.com" class="contact-link">
+                    <i class="fas fa-envelope"></i>
+                    Email Me
+                </a>
+                <a href="tel:+918758841041" class="contact-link">
+                    <i class="fas fa-phone"></i>
+                    +91 8758841041
+                </a>
+                <a href="https://linkedin.com/in/sharma-jatin-54717524b" class="contact-link" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/Sharmaji4103" class="contact-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    GitHub
+                </a>
+                <a href="https://sharmaji4103.github.io/My_Portfolio/" class="contact-link" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    Portfolio
+                </a>
+            </div>
+        </div>
+    </section>
 
-        bubble.style.left = `${bubbleLeft}px`;
-        bubble.style.display = "block";
+    <footer>
+        <p>&copy; 2026 Jatin Sharma. All rights reserved. Built with â¤ï¸ and code.</p>
+    </footer>
 
-        let currentLine = 0;
-
-        function typeLine() {
-          if (currentLine >= lines.length) return;
-
-          let line = lines[currentLine];
-          let i = 0;
-
-          if (currentLine > 0) bubble.innerText += "\n";
-
-          function typeChar() {
-            if (i < line.length) {
-              bubble.innerText += line[i];
-              i++;
-              setTimeout(typeChar, 20);
-            } else {
-              speakText(line);
-              currentLine++;
-              setTimeout(typeLine, 800);
-            }
-          }
-
-          typeChar();
-        }
-
-        typeLine();
-      }, 1000);
-    }
-  </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
