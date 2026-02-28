@@ -3,321 +3,696 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V-Creation Banner</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Bebas+Neue&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Vcreation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #c9a84c;
+    --orange: #e85d1a;
+    --dark: #0a0a0a;
+    --darker: #050505;
+    --light: #f5f0e8;
+    --accent: #e8d5a3;
+  }
+
+  html { scroll-behavior: smooth; }
 
   body {
-    background: #0a0a0a;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Montserrat', sans-serif;
+    background: var(--darker);
+    color: var(--light);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
   }
 
+  /* ------------------ NAV ------------------ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(5,5,5,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--gold); letter-spacing: 2px; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--accent); text-decoration: none; font-size: 0.85rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--gold);
+    color: var(--gold); padding: 0.6rem 1.6rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--darker); }
+
+  /* ------------------ BANNER ------------------ */
   .banner {
-    position: relative;
-    width: 1200px;
-    height: 550px;
-    background: linear-gradient(135deg, #0d0d0d 0%, #111118 50%, #0d0d12 100%);
-    overflow: hidden;
-    border: 1px solid rgba(180, 145, 80, 0.2);
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .banner-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://raw.githubusercontent.com/Sharmaji4103/My_Portfolio/main/Gemini_Generated_Image_t60sxjt60sxjt60s.png');
+    background-size: cover; background-position: center;
+    filter: brightness(0.35) saturate(0.8);
+    transform: scale(1.05); transition: transform 8s ease;
+  }
+  .banner:hover .banner-bg { transform: scale(1.1); }
+  .banner-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg,
+      rgba(5,5,5,0.7) 0%,
+      rgba(10,10,10,0.3) 50%,
+      rgba(201,168,76,0.1) 100%);
+  }
+  .banner-content {
+    position: relative; z-index: 2; text-align: center; padding: 2rem;
+  }
+  .banner-eyebrow {
+    font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem; opacity: 0.9;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 12vw, 10rem); font-weight: 900; line-height: 1;
+    color: var(--light); display: flex; justify-content: center; gap: 0.05em;
+    margin-bottom: 1.5rem; text-shadow: 0 0 80px rgba(201,168,76,0.3);
+  }
+  h2 .char { display: inline-block; will-change: transform; }
+  .banner-sub {
+    font-size: 1rem; font-weight: 300; letter-spacing: 4px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 3rem; opacity: 0.8;
+  }
+  .banner-btn {
+    display: inline-block; border: 1px solid var(--gold); color: var(--gold);
+    text-decoration: none; padding: 1rem 3rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.85rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    transition: all 0.4s; position: relative; overflow: hidden;
+  }
+  .banner-btn::before {
+    content: ''; position: absolute; inset: 0; background: var(--gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; z-index: -1;
+  }
+  .banner-btn:hover { color: var(--darker); }
+  .banner-btn:hover::before { transform: scaleX(1); }
+  .scroll-indicator {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.5;
+  }
+  .scroll-indicator span {
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0; transform: scaleY(0.5); }
+    50%       { opacity: 1; transform: scaleY(1); }
   }
 
-  /* Ambient glow orb */
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
+  /* ------------------ DIVIDER ------------------ */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  /* ------------------ SHARED SECTION ------------------ */
+  section { padding: 7rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 4rem); font-weight: 700;
+    line-height: 1.1; color: var(--light); margin-bottom: 2rem;
+  }
+  .section-text {
+    font-size: 1rem; line-height: 1.9; color: rgba(245,240,232,0.65); max-width: 600px;
+  }
+
+  /* ----------------------------------------------
+     OUR SERVICES — createLayout animation section
+  ---------------------------------------------- */
+  .services-section {
+    position: relative; width: 100%; padding: 8rem 4rem 5rem;
+    background: linear-gradient(180deg, #050505 0%, #0d0b04 50%, #050505 100%);
+    overflow: hidden;
+  }
+  .services-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
     pointer-events: none;
   }
-  .orb-1 {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(180,145,80,0.15) 0%, transparent 70%);
-    right: -100px; top: -100px;
-  }
-  .orb-2 {
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(100,120,200,0.1) 0%, transparent 70%);
-    left: 300px; bottom: -100px;
+  .services-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
+  .services-header { text-align: center; margin-bottom: 4rem; }
+  .services-header .section-label { display: block; text-align: center; }
+  .services-header .section-title {
+    font-size: clamp(2.5rem, 6vw, 5rem); text-align: center; margin-bottom: 0;
   }
 
-  /* Grid lines */
-  .grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(180,145,80,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(180,145,80,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
+  /* createLayout target — driven by data-grid attribute */
+  .layout-container { display: grid; gap: 1.5rem; }
+  .layout-container[data-grid="1"] { grid-template-columns: 1fr; }
+  .layout-container[data-grid="2"] { grid-template-columns: repeat(2, 1fr); }
+  .layout-container[data-grid="3"] { grid-template-columns: repeat(3, 1fr); }
+  .layout-container[data-grid="4"] { grid-template-columns: repeat(4, 1fr); }
+
+  /* -- Service card -- */
+  .service-card {
+    position: relative; border: 1px solid rgba(201,168,76,0.15);
+    background: rgba(201,168,76,0.03); overflow: hidden;
+    will-change: transform; transition: border-color 0.4s, box-shadow 0.4s;
   }
 
-  /* Left content */
-  .content {
-    position: absolute;
-    left: 70px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    max-width: 480px;
+  /* image area */
+  .service-card-img {
+    width: 100%; height: 220px; overflow: hidden; position: relative;
+  }
+  .service-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.75) saturate(0.85);
+    transition: transform 0.7s ease, filter 0.5s ease;
+    display: block;
+  }
+  .service-card:hover .service-card-img img {
+    transform: scale(1.08); filter: brightness(0.9) saturate(1);
+  }
+  .service-card-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(5,5,5,0.7) 100%);
   }
 
-  .eyebrow {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #b49150;
-    margin-bottom: 18px;
+  /* card body */
+  .service-card-body { padding: 2rem 2.5rem 3rem; }
+
+  /* shimmer sweep */
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.06), transparent);
+    transition: left 0.7s ease;
+  }
+  .service-card:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 20px 60px rgba(201,168,76,0.09); }
+  .service-card:hover::before { left: 130%; }
+
+  .service-icon-wrap {
+    width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1.5rem;
+    transition: border-color 0.4s, background 0.4s;
+  }
+  .service-card:hover .service-icon-wrap { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+  .service-num { font-size: 0.62rem; letter-spacing: 4px; color: var(--gold); opacity: 0.45; margin-bottom: 0.7rem; }
+  .service-name {
+    font-family: 'Playfair Display', serif; font-size: 1.55rem;
+    font-weight: 700; color: var(--light); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .service-desc { font-size: 0.87rem; line-height: 1.85; color: rgba(245,240,232,0.48); }
+  .service-tag {
+    display: inline-block; margin-top: 1.2rem;
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); opacity: 0; transform: translateX(8px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .service-card:hover .service-tag { opacity: 0.7; transform: translateX(0); }
+
+  /* layout indicator pills */
+  .layout-pill { display: flex; justify-content: center; gap: 0.6rem; margin-top: 3rem; }
+  .layout-pill span {
+    height: 4px; width: 24px; border-radius: 2px;
+    background: rgba(201,168,76,0.18); cursor: pointer;
+    transition: background 0.3s, width 0.3s;
+  }
+  .layout-pill span.active { background: var(--gold); width: 44px; }
+
+  /* ------------------------------------------------------
+     VADODARA — ADVERTISING PARTNER SECTION
+     Palace image displayed as a real <img> — never cropped
+  ------------------------------------------------------ */
+  .vadodara-section {
+    position: relative;
+    width: 100%;
+    background: #0f1720;
+    overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
   }
-  .eyebrow::before {
+
+  /* text content sits on top, above the palace */
+  .vadodara-content {
+    position: relative; z-index: 5;
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  /* sky-to-transparent gradient behind the text */
+  .vadodara-sky {
+    position: absolute; top: 0; left: 0; right: 0; height: 70%;
+    background: linear-gradient(to bottom,
+      #0d1520 0%,
+      #162030 25%,
+      #1e2f45 55%,
+      transparent 100%);
+    pointer-events: none; z-index: 2;
+  }
+
+  /* -- Palace as a real <img> — full width, height auto, zero crop -- */
+  .vadodara-palace-wrap {
+    position: relative;
+    width: 100%;
+    z-index: 3;
+    line-height: 0;         /* kill inline gap */
+  }
+  .vadodara-palace-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;           /* ? preserves full aspect ratio, no crop */
+    object-fit: contain;
+    filter: brightness(0.88) saturate(0.85);
+    /* fade into the section background at the top of the palace */
+    mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0,0,0,0.6) 8%,
+      rgba(0,0,0,1) 30%,
+      rgba(0,0,0,1) 100%);
+    -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0,0,0,0.6) 8%,
+      rgba(0,0,0,1) 30%,
+      rgba(0,0,0,1) 100%);
+  }
+  /* fade bottom of palace into page background */
+  .vadodara-palace-wrap::after {
     content: '';
-    display: block;
-    width: 32px;
-    height: 1px;
-    background: #b49150;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 30%;
+    background: linear-gradient(to bottom, transparent, var(--darker));
+    pointer-events: none; z-index: 1;
   }
 
-  .headline {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 88px;
-    line-height: 0.9;
-    color: #f5f0e8;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
+  /* spinning decorative star — top right */
+  .vadodara-star {
+    position: absolute; top: 1.8rem; right: 3rem;
+    font-size: 2.8rem; color: var(--orange); opacity: 0.9;
+    font-weight: 900; line-height: 1;
+    animation: starSpin 8s linear infinite;
+    z-index: 6;
   }
-  .headline .gold {
-    color: #b49150;
-    display: block;
-  }
-
-  .sub-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 300;
-    font-style: italic;
-    color: rgba(245, 240, 232, 0.6);
-    margin-bottom: 32px;
-    letter-spacing: 1px;
+  @keyframes starSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
 
-  .tagline {
-    font-size: 12px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(180,145,80,0.7);
-    margin-bottom: 36px;
+  .vadodara-line1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 300; color: #f0ecdf;
+    letter-spacing: 1px; margin-bottom: 0.2rem;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.9);
   }
-
-  .cta-row {
-    display: flex;
-    align-items: center;
-    gap: 24px;
+  .vadodara-line2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    font-weight: 900; color: var(--orange);
+    letter-spacing: 3px; text-transform: uppercase;
+    line-height: 1.05; margin-bottom: 0.2rem;
+    text-shadow: 0 0 50px rgba(232,93,26,0.45);
   }
-
-  .cta-btn {
-    padding: 14px 32px;
-    background: linear-gradient(135deg, #b49150, #d4ac60);
-    color: #0d0d0d;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
+  .vadodara-line3 {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 300; color: #f0ecdf;
+    letter-spacing: 1px; margin-bottom: 2.5rem;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.9);
+  }
+  .vadodara-btn {
     display: inline-block;
-    transition: all 0.3s;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    background: var(--orange); color: #fff;
+    text-decoration: underline;
+    padding: 0.9rem 3rem; border-radius: 50px;
+    font-family: 'Raleway', sans-serif; font-size: 1rem;
+    font-weight: 700; letter-spacing: 1px;
+    border: 2px solid var(--orange);
+    transition: all 0.35s;
+    box-shadow: 0 4px 30px rgba(232,93,26,0.4);
   }
-  .cta-btn:hover {
-    background: linear-gradient(135deg, #d4ac60, #e8c070);
+  .vadodara-btn:hover {
+    background: transparent; color: var(--orange);
+    box-shadow: 0 4px 44px rgba(232,93,26,0.6);
     transform: translateY(-2px);
   }
 
-  .stat {
-    color: #f5f0e8;
-    font-family: 'Cormorant Garamond', serif;
+  /* ------------------ WORK GRID ------------------ */
+  .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 4rem; }
+  .work-card {
+    aspect-ratio: 4/3; background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.1);
+    display: flex; align-items: flex-end;
+    padding: 1.5rem; position: relative; overflow: hidden; cursor: pointer; transition: all 0.4s;
   }
-  .stat-num {
-    font-size: 36px;
-    font-weight: 600;
-    color: #b49150;
-    line-height: 1;
+  .work-card:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.08); }
+  .work-card-num {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    font-size: 0.65rem; letter-spacing: 3px; color: var(--gold); opacity: 0.5;
   }
-  .stat-label {
-    font-size: 11px;
-    color: rgba(245,240,232,0.4);
-    letter-spacing: 1px;
-  }
+  .work-card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--light); }
 
-  /* Right image section */
-  .image-section {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 580px;
-    height: 100%;
-    overflow: hidden;
+  /* ------------------ FOOTER ------------------ */
+  footer { background: var(--darker); border-top: 1px solid rgba(201,168,76,0.15); padding: 4rem; }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
   }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); margin-bottom: 1rem; }
+  .footer-tagline { font-size: 0.85rem; line-height: 1.8; color: rgba(245,240,232,0.45); letter-spacing: 1px; }
+  .footer-col h4 { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-col ul a { color: rgba(245,240,232,0.5); text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; transition: color 0.3s; }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(245,240,232,0.3); letter-spacing: 2px; }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.3s; }
+  .footer-socials a:hover { color: var(--gold); }
 
-  .image-section img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    opacity: 0.9;
+  /* ------------------ RESPONSIVE ------------------ */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .services-section { padding: 5rem 1.5rem 4rem; }
+    .layout-container[data-grid="3"],
+    .layout-container[data-grid="4"] { grid-template-columns: repeat(2, 1fr); }
+    .service-card-img { height: 160px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .vadodara-line2 { font-size: 1.9rem; }
+    .vadodara-star { font-size: 2rem; right: 1.5rem; }
+    .vadodara-content { padding: 4rem 1.5rem 2rem; }
   }
-
-  /* Fade overlay from left */
-  .image-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, #0d0d0d 0%, rgba(13,13,13,0.3) 40%, transparent 100%);
-    z-index: 2;
-  }
-
-  /* Gold border accent */
-  .image-section::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(180deg, transparent, #b49150, transparent);
-    z-index: 3;
-  }
-
-  /* Corner decorations */
-  .corner {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    z-index: 20;
-  }
-  .corner-tl {
-    top: 20px; left: 20px;
-    border-top: 1px solid #b49150;
-    border-left: 1px solid #b49150;
-  }
-  .corner-br {
-    bottom: 20px; right: 20px;
-    border-bottom: 1px solid #b49150;
-    border-right: 1px solid #b49150;
-  }
-
-  /* Bottom bar */
-  .bottom-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 42px;
-    background: rgba(180,145,80,0.08);
-    border-top: 1px solid rgba(180,145,80,0.2);
-    display: flex;
-    align-items: center;
-    padding: 0 70px;
-    justify-content: space-between;
-    z-index: 20;
-  }
-
-  .bottom-text {
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: rgba(180,145,80,0.6);
-  }
-
-  .dots {
-    display: flex;
-    gap: 6px;
-  }
-  .dot {
-    width: 6px;
-    height: 6px;
-    background: #b49150;
-    border-radius: 50%;
-    opacity: 0.3;
-  }
-  .dot.active { opacity: 1; }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes shimmer {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
-
-  .eyebrow { animation: fadeUp 0.8s ease 0.1s both; }
-  .headline { animation: fadeUp 0.8s ease 0.25s both; }
-  .sub-headline { animation: fadeUp 0.8s ease 0.4s both; }
-  .tagline { animation: fadeUp 0.8s ease 0.5s both; }
-  .cta-row { animation: fadeUp 0.8s ease 0.65s both; }
-  .image-section { animation: fadeIn 1.2s ease 0.3s both; }
-  .bottom-text { animation: shimmer 3s ease infinite; }
 </style>
 </head>
 <body>
 
+<!-- -- NAV -- -->
+<nav>
+  <a class="nav-logo" href="#">Vcreation</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#our-services">Services</a></li>
+    <li><a href="#vadodara">Partner</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Let's Talk</button>
+</nav>
+
+<!-- -- BANNER -- -->
 <div class="banner">
-  <div class="grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="corner corner-tl"></div>
-  <div class="corner corner-br"></div>
-
-  <div class="content">
-    <div class="eyebrow">Website Design Studio</div>
-    <div class="headline">
-      YOUR
-      <span class="gold">VISION</span>
-      OUR CRAFT
-    </div>
-    <div class="sub-headline">Elevate with Exceptional Design</div>
-    <div class="tagline">Global Impact · Local Design · Est. 2022</div>
-    <div class="cta-row">
-      <a class="cta-btn" href="#">Get In Touch</a>
-      <div class="stat">
-        <div class="stat-num">25+</div>
-        <div class="stat-label">Projects Done</div>
-      </div>
-    </div>
+  <div class="banner-bg"></div>
+  <div class="banner-overlay"></div>
+  <div class="banner-content">
+    <p class="banner-eyebrow">? Creative Studio ?</p>
+    <h2 id="animated-title"></h2>
+    <p class="banner-sub">Design · Motion · Identity</p>
+    <a href="#our-services" class="banner-btn">Explore Services</a>
   </div>
-
-  <div class="image-section">
-    <img
-      src="https://raw.githubusercontent.com/Sharmaji4103/My_Portfolio/main/Gemini_Generated_Image_t60sxjt60sxjt60s.png"
-      alt="V-Creation Portfolio"
-    />
-  </div>
-
-  <div class="bottom-bar">
-    <span class="bottom-text">Global Impact. Local Design. V-Creation.</span>
-    <div class="dots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-    <span class="bottom-text">V-Creation Studio</span>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<!-- --------------------------------------
+     OUR SERVICES · createLayout animation
+-------------------------------------- -->
+<div class="services-section" id="our-services">
+  <div class="services-inner">
+
+    <div class="services-header">
+      <p class="section-label">? Our Services ?</p>
+      <h3 class="section-title">What We Create<br>For You</h3>
+    </div>
+
+    <!-- createLayout targets this element -->
+    <div class="layout-container" data-grid="1">
+
+      <!-- Card 1 · Logo & Branding -->
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80"
+               alt="Logo & Branding" loading="lazy">
+          <div class="service-card-img-overlay"></div>
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon-wrap">?</div>
+          <p class="service-num">01</p>
+          <h4 class="service-name">Logo &amp;<br>Branding</h4>
+          <p class="service-desc">Distinctive brand identities — from mark to motion — that leave a lasting impression and communicate your essence at a glance.</p>
+          <span class="service-tag">Explore ?</span>
+        </div>
+      </div>
+
+      <!-- Card 2 · UI/UX Designing -->
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
+               alt="UI/UX Designing" loading="lazy">
+          <div class="service-card-img-overlay"></div>
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon-wrap">?</div>
+          <p class="service-num">02</p>
+          <h4 class="service-name">UI/UX<br>Designing</h4>
+          <p class="service-desc">Pixel-perfect interfaces that marry beauty with function — creating seamless experiences users love to navigate every single day.</p>
+          <span class="service-tag">Explore ?</span>
+        </div>
+      </div>
+
+      <!-- Card 3 · Video Editing — fixed image -->
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://tse3.mm.bing.net/th/id/OIP.jkXXBh6-oE14bH1DPuneNAHaEK?pid=Api&h=220&P=0"
+               alt="Video Editing" loading="lazy">
+          <div class="service-card-img-overlay"></div>
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon-wrap">?</div>
+          <p class="service-num">03</p>
+          <h4 class="service-name">Video<br>Editing</h4>
+          <p class="service-desc">Cinematic storytelling through motion — from reels to full productions, we cut, colour, and compose visuals that captivate and convert.</p>
+          <span class="service-tag">Explore ?</span>
+        </div>
+      </div>
+
+    </div><!-- /.layout-container -->
+
+    <!-- Clickable grid-state indicator pills -->
+    <div class="layout-pill" id="layout-pill">
+      <span data-g="1" class="active" title="1 column"></span>
+      <span data-g="2" title="2 columns"></span>
+      <span data-g="3" title="3 columns"></span>
+      <span data-g="4" title="4 columns"></span>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- --------------------------------------------------
+     VADODARA — ADVERTISING PARTNER
+     Real <img> for palace so the full image is visible
+-------------------------------------------------- -->
+<div class="vadodara-section" id="vadodara">
+
+  <!-- sky gradient overlay sits behind the text -->
+  <div class="vadodara-sky"></div>
+
+  <!-- spinning decorative star — top right -->
+  <div class="vadodara-star">?</div>
+
+  <!-- text block — rendered above the palace -->
+  <div class="vadodara-content">
+    <p class="vadodara-line1">Your creative</p>
+    <p class="vadodara-line2">ADVERTISING PARTNER</p>
+    <p class="vadodara-line3">in Vadodara</p>
+    <a href="#contact" class="vadodara-btn">About Us</a>
+  </div>
+
+  <!-- Palace image — full width, height auto = zero cropping -->
+  <div class="vadodara-palace-wrap">
+    <img
+      src="https://www.shadowsgalore.com/wp-content/uploads/2016/10/Laxmi_Vilas_Palace.jpg"
+      alt="Laxmi Vilas Palace Vadodara"
+      loading="lazy"
+    >
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- -- ABOUT -- -->
+<section id="about">
+  <p class="section-label">01 — About</p>
+  <h3 class="section-title">Crafting Visual<br>Experiences</h3>
+  <p class="section-text">
+    Vcreation is a boutique creative studio dedicated to building unforgettable visual identities,
+    immersive digital experiences, and motion-driven design that speaks before words do.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- WORK -- -->
+<section id="work" style="max-width:100%; padding: 7rem 4rem;">
+  <p class="section-label">02 — Work</p>
+  <h3 class="section-title">Selected Projects</h3>
+  <div class="work-grid">
+    <div class="work-card"><span class="work-card-num">01</span><span class="work-card-title">Brand Identity</span></div>
+    <div class="work-card"><span class="work-card-num">02</span><span class="work-card-title">Motion Design</span></div>
+    <div class="work-card"><span class="work-card-num">03</span><span class="work-card-title">Web Experience</span></div>
+    <div class="work-card"><span class="work-card-num">04</span><span class="work-card-title">Print &amp; Editorial</span></div>
+    <div class="work-card"><span class="work-card-num">05</span><span class="work-card-title">UI / UX Design</span></div>
+    <div class="work-card"><span class="work-card-num">06</span><span class="work-card-title">Photography</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- FOOTER -- -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Vcreation</div>
+      <p class="footer-tagline">A creative studio obsessed<br>with the art of making.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#our-services">Services</a></li>
+        <li><a href="#vadodara">Partner</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hello@vcreation.studio">hello@vcreation.studio</a></li>
+        <li><a href="#">+91 000 000 0000</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Behance</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Vcreation. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Behance</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  import { createLayout, animate, stagger } from 'https://esm.sh/animejs';
+
+  /* --------------------------------------------------
+     1. createLayout — services grid  1 ? 2 ? 3 ? 4 ? …
+  -------------------------------------------------- */
+  const layout = createLayout('.layout-container');
+  const pills  = document.querySelectorAll('#layout-pill span');
+  let i = 0;
+
+  function syncPills(n) {
+    pills.forEach(p => p.classList.toggle('active', +p.dataset.g === n));
+  }
+
+  function animateLayout() {
+    const next = (++i % 4) + 1;
+    syncPills(next);
+    return layout.update(({ root }) => {
+      root.dataset.grid = next;
+    }, {
+      duration: 1000,
+      delay: stagger(150),
+      onComplete: () => animateLayout()
+    });
+  }
+
+  setTimeout(() => animateLayout(), 1400);
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const t = +pill.dataset.g;
+      i = t - 1;
+      syncPills(t);
+      layout.update(({ root }) => { root.dataset.grid = t; }, {
+        duration: 700, delay: stagger(100)
+      });
+    });
+  });
+
+  /* --------------------------------------------------
+     2. Banner name — bounce + rotate animation
+  -------------------------------------------------- */
+  const h2 = document.getElementById('animated-title');
+  h2.innerHTML = '';
+  const chars = [];
+  for (const ch of 'Vcreation') {
+    const s = document.createElement('span');
+    s.className = 'char';
+    s.textContent = ch;
+    h2.appendChild(s);
+    chars.push(s);
+  }
+
+  animate(chars, {
+    y: [
+      { to: '-2.75rem', ease: 'outExpo',   duration: 600 },
+      { to: 0,          ease: 'outBounce',  duration: 800, delay: 100 }
+    ],
+    rotate: { from: '-1turn', delay: 0 },
+    delay:     stagger(50),
+    ease:      'inOutCirc',
+    loopDelay: 1000,
+    loop:      true
+  });
+</script>
 
 </body>
 </html>
