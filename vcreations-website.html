@@ -402,6 +402,123 @@
   .footer-socials a { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.3s; }
   .footer-socials a:hover { color: var(--gold); }
 
+
+  /* ----------------------------------------------
+     PORTFOLIO SECTION
+  ---------------------------------------------- */
+  .portfolio-section {
+    width: 100%; padding: 8rem 4rem;
+    background: var(--darker); position: relative; overflow: hidden;
+  }
+  .portfolio-section::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .portfolio-inner { max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+  .portfolio-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 4rem; gap: 2rem; flex-wrap: wrap;
+  }
+  .portfolio-header-left .section-label { margin-bottom: 0.8rem; }
+  .portfolio-header-left .section-title { margin-bottom: 0; }
+  .portfolio-header-right { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .pf-filter-btn {
+    background: transparent; border: 1px solid rgba(201,168,76,0.2);
+    color: rgba(245,240,232,0.45); padding: 0.5rem 1.2rem;
+    font-family: "Raleway", sans-serif; font-size: 0.72rem;
+    letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; border-radius: 2px;
+  }
+  .pf-filter-btn:hover, .pf-filter-btn.active {
+    border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06);
+  }
+  .portfolio-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .portfolio-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/7; }
+  .portfolio-item:nth-child(6) { grid-column: span 2; aspect-ratio: 16/7; }
+  .portfolio-item:not(:nth-child(1)):not(:nth-child(6)) { aspect-ratio: 4/3; }
+  .portfolio-item {
+    position: relative; overflow: hidden; cursor: pointer;
+    border: 1px solid rgba(201,168,76,0.08); background: #111;
+  }
+  .portfolio-item img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.6s ease;
+    filter: brightness(0.7) saturate(0.7);
+  }
+  .portfolio-item:hover img { transform: scale(1.07); filter: brightness(0.45) saturate(0.5); }
+  .portfolio-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.55) 40%, transparent 70%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2.5rem; transition: background 0.5s;
+  }
+  .portfolio-item:hover .portfolio-item-overlay {
+    background: linear-gradient(to top, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.8) 50%, rgba(5,5,5,0.3) 80%, transparent 100%);
+  }
+  .portfolio-cat {
+    font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
+  }
+  .portfolio-item:hover .portfolio-cat { opacity: 1; transform: translateY(0); }
+  .portfolio-item-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.1rem, 2vw, 1.7rem); font-weight: 700;
+    color: var(--light); line-height: 1.2; margin-bottom: 0.8rem;
+    transform: translateY(4px); transition: transform 0.4s;
+  }
+  .portfolio-item:hover .portfolio-item-title { transform: translateY(0); }
+  .portfolio-item-desc {
+    font-size: 0.82rem; line-height: 1.75;
+    color: rgba(245,240,232,0.55); max-width: 480px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
+  }
+  .portfolio-item:hover .portfolio-item-desc { opacity: 1; transform: translateY(0); }
+  .portfolio-item-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1.2rem; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.4s 0.15s, transform 0.4s 0.15s;
+    text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.4);
+    padding-bottom: 2px; width: fit-content;
+  }
+  .portfolio-item:hover .portfolio-item-cta { opacity: 1; transform: translateY(0); }
+  .portfolio-num {
+    position: absolute; top: 1.4rem; right: 1.6rem;
+    font-size: 0.6rem; letter-spacing: 3px;
+    color: rgba(201,168,76,0.5); z-index: 2;
+    font-family: "Raleway", sans-serif; font-weight: 600;
+  }
+  .portfolio-item::after {
+    content: ''; position: absolute; inset: 0;
+    border: 1px solid rgba(201,168,76,0);
+    transition: border-color 0.4s; pointer-events: none; z-index: 3;
+  }
+  .portfolio-item:hover::after { border-color: rgba(201,168,76,0.4); }
+  .portfolio-footer { display: flex; justify-content: center; margin-top: 3.5rem; }
+  .portfolio-view-all {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    border: 1px solid rgba(201,168,76,0.3); color: var(--gold);
+    padding: 0.9rem 2.5rem;
+    font-family: "Raleway", sans-serif; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none; transition: all 0.4s;
+    position: relative; overflow: hidden;
+  }
+  .portfolio-view-all::before {
+    content: ''; position: absolute; inset: 0; background: var(--gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; z-index: -1;
+  }
+  .portfolio-view-all:hover { color: var(--darker); }
+  .portfolio-view-all:hover::before { transform: scaleX(1); }
+
   /* ------------------ RESPONSIVE ------------------ */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
@@ -417,6 +534,11 @@
     .vadodara-line2 { font-size: 1.9rem; }
     .vadodara-star { font-size: 2rem; right: 1.5rem; }
     .vadodara-content { padding: 4rem 1.5rem 2rem; }
+    .portfolio-section { padding: 5rem 1.5rem; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-item:nth-child(1),
+    .portfolio-item:nth-child(6) { grid-column: span 1; aspect-ratio: 4/3; }
+    .portfolio-header { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
@@ -429,7 +551,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#our-services">Services</a></li>
     <li><a href="#vadodara">Partner</a></li>
-    <li><a href="#work">Work</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="nav-cta">Let's Talk</button>
@@ -440,9 +562,9 @@
   <div class="banner-bg"></div>
   <div class="banner-overlay"></div>
   <div class="banner-content">
-    <p class="banner-eyebrow">? Creative Studio ?</p>
+    <p class="banner-eyebrow"> Creative Studio </p>
     <h2 id="animated-title"></h2>
-    <p class="banner-sub">Design · Motion · Identity</p>
+    <p class="banner-sub">Design | Motion | Identity</p>
     <a href="#our-services" class="banner-btn">Explore Services</a>
   </div>
   <div class="scroll-indicator">
@@ -460,7 +582,7 @@
   <div class="services-inner">
 
     <div class="services-header">
-      <p class="section-label">? Our Services ?</p>
+      <p class="section-label"> Our Services </p>
       <h3 class="section-title">What We Create<br>For You</h3>
     </div>
 
@@ -475,11 +597,11 @@
           <div class="service-card-img-overlay"></div>
         </div>
         <div class="service-card-body">
-          <div class="service-icon-wrap">?</div>
-          <p class="service-num">01</p>
+          <div class="service-icon-wrap">01</div>
+          <p class="service-num"></p>
           <h4 class="service-name">Logo &amp;<br>Branding</h4>
           <p class="service-desc">Distinctive brand identities — from mark to motion — that leave a lasting impression and communicate your essence at a glance.</p>
-          <span class="service-tag">Explore ?</span>
+          <span class="service-tag">Explore</span>
         </div>
       </div>
 
@@ -491,11 +613,11 @@
           <div class="service-card-img-overlay"></div>
         </div>
         <div class="service-card-body">
-          <div class="service-icon-wrap">?</div>
-          <p class="service-num">02</p>
+          <div class="service-icon-wrap">02</div>
+          <p class="service-num"></p>
           <h4 class="service-name">UI/UX<br>Designing</h4>
           <p class="service-desc">Pixel-perfect interfaces that marry beauty with function — creating seamless experiences users love to navigate every single day.</p>
-          <span class="service-tag">Explore ?</span>
+          <span class="service-tag">Explore</span>
         </div>
       </div>
 
@@ -507,11 +629,11 @@
           <div class="service-card-img-overlay"></div>
         </div>
         <div class="service-card-body">
-          <div class="service-icon-wrap">?</div>
-          <p class="service-num">03</p>
+          <div class="service-icon-wrap">03</div>
+          <p class="service-num"></p>
           <h4 class="service-name">Video<br>Editing</h4>
           <p class="service-desc">Cinematic storytelling through motion — from reels to full productions, we cut, colour, and compose visuals that captivate and convert.</p>
-          <span class="service-tag">Explore ?</span>
+          <span class="service-tag">Explore</span>
         </div>
       </div>
 
@@ -564,30 +686,118 @@
 <div class="divider"></div>
 
 <!-- -- ABOUT -- -->
-<section id="about">
-  <p class="section-label">01 — About</p>
-  <h3 class="section-title">Crafting Visual<br>Experiences</h3>
-  <p class="section-text">
-    Vcreation is a boutique creative studio dedicated to building unforgettable visual identities,
-    immersive digital experiences, and motion-driven design that speaks before words do.
-  </p>
-</section>
 
-<div class="divider"></div>
 
-<!-- -- WORK -- -->
-<section id="work" style="max-width:100%; padding: 7rem 4rem;">
-  <p class="section-label">02 — Work</p>
-  <h3 class="section-title">Selected Projects</h3>
-  <div class="work-grid">
-    <div class="work-card"><span class="work-card-num">01</span><span class="work-card-title">Brand Identity</span></div>
-    <div class="work-card"><span class="work-card-num">02</span><span class="work-card-title">Motion Design</span></div>
-    <div class="work-card"><span class="work-card-num">03</span><span class="work-card-title">Web Experience</span></div>
-    <div class="work-card"><span class="work-card-num">04</span><span class="work-card-title">Print &amp; Editorial</span></div>
-    <div class="work-card"><span class="work-card-num">05</span><span class="work-card-title">UI / UX Design</span></div>
-    <div class="work-card"><span class="work-card-num">06</span><span class="work-card-title">Photography</span></div>
+<!-- --------------------------------------------------
+     PORTFOLIO SECTION — 6 Projects
+-------------------------------------------------- -->
+<div class="portfolio-section" id="portfolio">
+  <div class="portfolio-inner">
+
+    <!-- Header + filter buttons -->
+    <div class="portfolio-header">
+      <div class="portfolio-header-left">
+        <p class="section-label">02 Portfolio</p>
+        <h3 class="section-title">Our Work<br>Speaks</h3>
+      </div>
+      <div class="portfolio-header-right">
+        <button class="pf-filter-btn active">All</button>
+        <button class="pf-filter-btn">Branding</button>
+        <button class="pf-filter-btn">UI/UX</button>
+        <button class="pf-filter-btn">Video</button>
+      </div>
+    </div>
+
+    <!-- Portfolio Grid — 6 items -->
+    <div class="portfolio-grid">
+
+      <!-- 01 · Featured · Branding (spans 2 cols) -->
+      <div class="portfolio-item">
+        <span class="portfolio-num">01</span>
+        <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=1200&q=80"
+             alt="Brand Identity Project" loading="lazy">
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-cat">Branding</span>
+          <h4 class="portfolio-item-title">Aura Brand Identity System</h4>
+          <p class="portfolio-item-desc">A complete visual identity crafted for a luxury wellness brand — logo, typography, colour palette, and motion guidelines.</p>
+          <a href="#" class="portfolio-item-cta">View Project ?</a>
+        </div>
+      </div>
+
+      <!-- 02 · UI/UX -->
+      <div class="portfolio-item">
+        <span class="portfolio-num">02</span>
+        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80"
+             alt="UI/UX Design" loading="lazy">
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-cat">UI / UX</span>
+          <h4 class="portfolio-item-title">Nexus Mobile App Design</h4>
+          <p class="portfolio-item-desc">End to end UX research, wireframing and pixel-perfect UI for a fintech startup.</p>
+          <a href="#" class="portfolio-item-cta">View Project ?</a>
+        </div>
+      </div>
+
+      <!-- 03 · Video -->
+      <div class="portfolio-item">
+        <span class="portfolio-num">03</span>
+        <img src="https://blog.hootsuite.com/wp-content/uploads/2022/10/free-video-editing-software-01.png"
+             alt="Video Production" loading="lazy">
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-cat">Video</span>
+          <h4 class="portfolio-item-title">Lumina Brand Film</h4>
+          <p class="portfolio-item-desc">A 90-second cinematic brand film shot and edited for a Vadodara based fashion label.</p>
+          <a href="#" class="portfolio-item-cta">View Project ?</a>
+        </div>
+      </div>
+
+      <!-- 04 · Branding -->
+      <div class="portfolio-item">
+        <span class="portfolio-num">04</span>
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
+             alt="Packaging Design" loading="lazy">
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-cat">Branding</span>
+          <h4 class="portfolio-item-title">Verdant Packaging Design</h4>
+          <p class="portfolio-item-desc">Sustainable packaging system for an organic food brand print-ready with foil accent details.</p>
+          <a href="#" class="portfolio-item-cta">View Project ?</a>
+        </div>
+      </div>
+
+      <!-- 05 · UI/UX -->
+      <div class="portfolio-item">
+        <span class="portfolio-num">05</span>
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+             alt="Dashboard UI" loading="lazy">
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-cat">UI / UX</span>
+          <h4 class="portfolio-item-title">Pulse SaaS Dashboard</h4>
+          <p class="portfolio-item-desc">A data rich analytics dashboard UI with dark mode, custom charts, and an accessible component library.</p>
+          <a href="#" class="portfolio-item-cta">View Project ?</a>
+        </div>
+      </div>
+
+      <!-- 06 · Featured · Video (spans 2 cols) -->
+      <div class="portfolio-item">
+        <span class="portfolio-num">06</span>
+        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=80"
+             alt="Motion Reel" loading="lazy">
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-cat">Video · Motion</span>
+          <h4 class="portfolio-item-title">Vcreation 2025 Showreel</h4>
+          <p class="portfolio-item-desc">Our annual showreel capturing the best of 2025 brand films, motion graphics, title sequences, and social content.</p>
+          <a href="#" class="portfolio-item-cta">Watch Reel ?</a>
+        </div>
+      </div>
+
+    </div><!-- /.portfolio-grid -->
+
+    <!-- View All CTA -->
+    <div class="portfolio-footer">
+      <a href="#" class="portfolio-view-all">View All Projects &nbsp;?</a>
+    </div>
+
   </div>
-</section>
+</div>
 
 <div class="divider"></div>
 
@@ -611,7 +821,7 @@
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="mailto:hello@vcreation.studio">hello@vcreation.studio</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#375f525b5b58774154455256435e585919444342535e58"><span class="__cf_email__" data-cfemail="b5ddd0d9d9daf5c3d6c7d0d4c1dcdadb9bc6c1c0d1dcda">[email&#160;protected]</span></a></li>
         <li><a href="#">+91 000 000 0000</a></li>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">Behance</a></li>
@@ -628,7 +838,7 @@
   </div>
 </footer>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
   import { createLayout, animate, stagger } from 'https://esm.sh/animejs';
 
   /* --------------------------------------------------
@@ -684,13 +894,46 @@
   animate(chars, {
     y: [
       { to: '-2.75rem', ease: 'outExpo',   duration: 600 },
-      { to: 0,          ease: 'outBounce',  duration: 800, delay: 100 }
+        { to: 0,          ease: 'outBounce',  duration: 800, delay: 100 }
     ],
     rotate: { from: '-1turn', delay: 0 },
     delay:     stagger(50),
     ease:      'inOutCirc',
     loopDelay: 1000,
     loop:      true
+  });
+
+  /* --------------------------------------------------
+     3. Portfolio filter buttons — active state toggle
+  -------------------------------------------------- */
+  document.querySelectorAll('.pf-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pf-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  /* Portfolio items — entrance animation on scroll */
+  const pfItems = document.querySelectorAll('.portfolio-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animate(entry.target, {
+          opacity: [{ from: 0, to: 1 }],
+          y: [{ from: 30, to: 0 }],
+          duration: 700,
+          ease: 'outExpo',
+          delay: (+entry.target.dataset.pfIdx || 0) * 80
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  pfItems.forEach((item, idx) => {
+    item.dataset.pfIdx = idx;
+    item.style.opacity = 0;
+    observer.observe(item);
   });
 </script>
 
