@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vcreation</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -26,7 +27,7 @@
     overflow-x: hidden;
   }
 
-  /* ------------------ NAV ------------------ */
+  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
     display: flex; align-items: center; justify-content: space-between;
@@ -61,7 +62,7 @@
   }
   .nav-cta:hover { background: var(--gold); color: var(--darker); }
 
-  /* ------------------ BANNER ------------------ */
+  /* BANNER */
   .banner {
     position: relative; min-height: 100vh;
     display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -129,13 +130,13 @@
     50%       { opacity: 1; transform: scaleY(1); }
   }
 
-  /* ------------------ DIVIDER ------------------ */
+  /* DIVIDER */
   .divider {
     width: 100%; height: 1px;
     background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
   }
 
-  /* ------------------ SHARED SECTION ------------------ */
+  /* SHARED SECTION */
   section { padding: 7rem 4rem; max-width: 1200px; margin: 0 auto; }
   .section-label {
     font-size: 0.7rem; letter-spacing: 6px; text-transform: uppercase;
@@ -150,9 +151,7 @@
     font-size: 1rem; line-height: 1.9; color: rgba(245,240,232,0.65); max-width: 600px;
   }
 
-  /* ----------------------------------------------
-     OUR SERVICES — createLayout animation section
-  ---------------------------------------------- */
+  /* SERVICES */
   .services-section {
     position: relative; width: 100%; padding: 8rem 4rem 5rem;
     background: linear-gradient(180deg, #050505 0%, #0d0b04 50%, #050505 100%);
@@ -169,22 +168,17 @@
   .services-header .section-title {
     font-size: clamp(2.5rem, 6vw, 5rem); text-align: center; margin-bottom: 0;
   }
-
-  /* createLayout target — driven by data-grid attribute */
   .layout-container { display: grid; gap: 1.5rem; }
   .layout-container[data-grid="1"] { grid-template-columns: 1fr; }
   .layout-container[data-grid="2"] { grid-template-columns: repeat(2, 1fr); }
   .layout-container[data-grid="3"] { grid-template-columns: repeat(3, 1fr); }
   .layout-container[data-grid="4"] { grid-template-columns: repeat(4, 1fr); }
 
-  /* -- Service card -- */
   .service-card {
     position: relative; border: 1px solid rgba(201,168,76,0.15);
     background: rgba(201,168,76,0.03); overflow: hidden;
     will-change: transform; transition: border-color 0.4s, box-shadow 0.4s;
   }
-
-  /* image area */
   .service-card-img {
     width: 100%; height: 220px; overflow: hidden; position: relative;
   }
@@ -201,11 +195,7 @@
     position: absolute; inset: 0;
     background: linear-gradient(to bottom, transparent 40%, rgba(5,5,5,0.7) 100%);
   }
-
-  /* card body */
   .service-card-body { padding: 2rem 2.5rem 3rem; }
-
-  /* shimmer sweep */
   .service-card::before {
     content: ''; position: absolute; top: 0; left: -100%;
     width: 60%; height: 100%;
@@ -214,7 +204,6 @@
   }
   .service-card:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 20px 60px rgba(201,168,76,0.09); }
   .service-card:hover::before { left: 130%; }
-
   .service-icon-wrap {
     width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.25);
     display: flex; align-items: center; justify-content: center;
@@ -222,7 +211,6 @@
     transition: border-color 0.4s, background 0.4s;
   }
   .service-card:hover .service-icon-wrap { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-
   .service-num { font-size: 0.62rem; letter-spacing: 4px; color: var(--gold); opacity: 0.45; margin-bottom: 0.7rem; }
   .service-name {
     font-family: 'Playfair Display', serif; font-size: 1.55rem;
@@ -236,8 +224,6 @@
     transition: opacity 0.4s, transform 0.4s;
   }
   .service-card:hover .service-tag { opacity: 0.7; transform: translateX(0); }
-
-  /* layout indicator pills */
   .layout-pill { display: flex; justify-content: center; gap: 0.6rem; margin-top: 3rem; }
   .layout-pill span {
     height: 4px; width: 24px; border-radius: 2px;
@@ -246,166 +232,309 @@
   }
   .layout-pill span.active { background: var(--gold); width: 44px; }
 
-  /* ------------------------------------------------------
-     VADODARA — ADVERTISING PARTNER SECTION
-     Palace image displayed as a real <img> — never cropped
-  ------------------------------------------------------ */
-  .vadodara-section {
+  /* ------------------------------------------------
+     SHOWCASE / SWIPER SECTION — after services
+  ------------------------------------------------ */
+  .showcase-section {
     position: relative;
     width: 100%;
-    background: #0f1720;
+    padding: 8rem 4rem;
+    background: linear-gradient(180deg, #050505 0%, #080806 60%, #050505 100%);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  }
+
+  /* ambient glow */
+  .showcase-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 15% 50%, rgba(201,168,76,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 60% at 85% 50%, rgba(232,93,26,0.04) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* subtle grain texture */
+  .showcase-section::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4; pointer-events: none; z-index: 0;
+  }
+
+  .showcase-inner {
+    position: relative; z-index: 2;
+    max-width: 1300px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    gap: 3rem;
   }
 
-  /* text content sits on top, above the palace */
+  /* --- Left panel --- */
+  .sc-left {
+    padding-right: 2rem;
+    justify-self: end;
+    max-width: 420px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .sc-left.visible { opacity: 1; transform: translateX(0); }
+
+  .sc-eyebrow {
+    font-size: 0.68rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .sc-eyebrow::before {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--gold);
+  }
+
+  .sc-left h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--light); margin-bottom: 1.4rem;
+  }
+  .sc-left h3 em {
+    font-style: italic; color: var(--gold);
+  }
+
+  .sc-left p {
+    font-size: 0.9rem; line-height: 1.9;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300; margin-bottom: 2.5rem;
+  }
+
+  .sc-stats {
+    display: flex; gap: 2rem; margin-bottom: 2.5rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    padding: 1.2rem 0;
+  }
+  .sc-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--gold); line-height: 1;
+  }
+  .sc-stat-label {
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,240,232,0.4); margin-top: 4px;
+  }
+
+  .sc-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--gold); color: var(--gold);
+    padding: 0.85rem 2.2rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.75rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none; position: relative; overflow: hidden;
+    transition: color 0.4s;
+  }
+  .sc-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--gold); transform: scaleX(0);
+    transform-origin: left; transition: transform 0.4s ease; z-index: -1;
+  }
+  .sc-btn:hover { color: var(--darker); }
+  .sc-btn:hover::before { transform: scaleX(1); }
+  .sc-btn svg { transition: transform 0.3s; }
+  .sc-btn:hover svg { transform: translateX(4px); }
+
+  /* --- Swiper center --- */
+  .sc-swiper-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.2s ease, transform 0.8s 0.2s ease;
+  }
+  .sc-swiper-wrap.visible { opacity: 1; transform: translateY(0); }
+
+  /* glow ring under the stack */
+  .sc-swiper-wrap::before {
+    content: '';
+    position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
+    width: 180px; height: 40px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.35) 0%, transparent 70%);
+    filter: blur(12px);
+    pointer-events: none;
+  }
+
+  .sc-swiper {
+    width: 250px;
+    height: 350px;
+  }
+
+  .sc-swiper .swiper-slide {
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.12);
+  }
+  .sc-swiper .swiper-slide:active { cursor: grabbing; }
+  .sc-swiper .swiper-slide img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: brightness(0.8) saturate(0.9);
+    transition: transform 0.5s ease, filter 0.4s ease;
+  }
+  .sc-swiper .swiper-slide:hover img {
+    transform: scale(1.06); filter: brightness(0.95) saturate(1.05);
+  }
+  .slide-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 18px 18px;
+    background: linear-gradient(to top, rgba(5,5,5,0.85) 0%, transparent 100%);
+  }
+  .slide-cat {
+    font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px; opacity: 0.85;
+  }
+  .slide-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--light); line-height: 1.2;
+  }
+
+  /* --- Right panel --- */
+  .sc-right {
+    padding-left: 2rem;
+    max-width: 380px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.8s 0.3s ease, transform 0.8s 0.3s ease;
+  }
+  .sc-right.visible { opacity: 1; transform: translateX(0); }
+
+  .sc-right h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+    font-weight: 700; color: var(--light);
+    line-height: 1.2; margin-bottom: 1.8rem;
+  }
+
+  .sc-features { list-style: none; margin-bottom: 2.5rem; }
+  .sc-features li {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .sc-feat-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.75rem; color: var(--gold);
+    margin-top: 2px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .sc-features li:hover .sc-feat-icon {
+    background: rgba(201,168,76,0.1); border-color: var(--gold);
+  }
+  .sc-feat-title {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1px;
+    color: var(--light); margin-bottom: 3px; text-transform: uppercase;
+  }
+  .sc-feat-desc {
+    font-size: 0.82rem; line-height: 1.7;
+    color: rgba(245,240,232,0.42); font-weight: 300;
+  }
+
+  .sc-quote {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.2rem;
+  }
+  .sc-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 0.95rem;
+    color: rgba(245,240,232,0.7); line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+  .sc-quote cite {
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(201,168,76,0.55); font-style: normal;
+  }
+
+  /* vertical separator lines */
+  .sc-vline {
+    position: absolute;
+    top: 12%; height: 76%;
+    width: 1px;
+    background: linear-gradient(to bottom,
+      transparent,
+      rgba(201,168,76,0.12) 25%,
+      rgba(201,168,76,0.12) 75%,
+      transparent);
+    pointer-events: none; z-index: 1;
+  }
+  .sc-vline-left  { left: calc(33.333% - 1px); }
+  .sc-vline-right { left: calc(66.666%); }
+
+
+  /* VADODARA */
+  .vadodara-section {
+    position: relative; width: 100%; background: #0f1720;
+    overflow: hidden; display: flex; flex-direction: column; align-items: center;
+  }
   .vadodara-content {
-    position: relative; z-index: 5;
-    text-align: center;
-    padding: 5rem 2rem 3rem;
-    max-width: 800px;
-    width: 100%;
+    position: relative; z-index: 5; text-align: center;
+    padding: 5rem 2rem 3rem; max-width: 800px; width: 100%;
   }
-
-  /* sky-to-transparent gradient behind the text */
   .vadodara-sky {
     position: absolute; top: 0; left: 0; right: 0; height: 70%;
-    background: linear-gradient(to bottom,
-      #0d1520 0%,
-      #162030 25%,
-      #1e2f45 55%,
-      transparent 100%);
+    background: linear-gradient(to bottom, #0d1520 0%, #162030 25%, #1e2f45 55%, transparent 100%);
     pointer-events: none; z-index: 2;
   }
-
-  /* -- Palace as a real <img> — full width, height auto, zero crop -- */
   .vadodara-palace-wrap {
-    position: relative;
-    width: 100%;
-    z-index: 3;
-    line-height: 0;         /* kill inline gap */
+    position: relative; width: 100%; z-index: 3; line-height: 0;
   }
   .vadodara-palace-wrap img {
-    display: block;
-    width: 100%;
-    height: auto;           /* ? preserves full aspect ratio, no crop */
-    object-fit: contain;
+    display: block; width: 100%; height: auto; object-fit: contain;
     filter: brightness(0.88) saturate(0.85);
-    /* fade into the section background at the top of the palace */
-    mask-image: linear-gradient(to bottom,
-      transparent 0%,
-      rgba(0,0,0,0.6) 8%,
-      rgba(0,0,0,1) 30%,
-      rgba(0,0,0,1) 100%);
-    -webkit-mask-image: linear-gradient(to bottom,
-      transparent 0%,
-      rgba(0,0,0,0.6) 8%,
-      rgba(0,0,0,1) 30%,
-      rgba(0,0,0,1) 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 100%);
   }
-  /* fade bottom of palace into page background */
   .vadodara-palace-wrap::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 30%;
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 30%;
     background: linear-gradient(to bottom, transparent, var(--darker));
     pointer-events: none; z-index: 1;
   }
-
-  /* spinning decorative star — top right */
   .vadodara-star {
     position: absolute; top: 1.8rem; right: 3rem;
     font-size: 2.8rem; color: var(--orange); opacity: 0.9;
     font-weight: 900; line-height: 1;
-    animation: starSpin 8s linear infinite;
-    z-index: 6;
+    animation: starSpin 8s linear infinite; z-index: 6;
   }
   @keyframes starSpin {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
   }
-
   .vadodara-line1 {
-    font-family: 'Raleway', sans-serif;
-    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
-    font-weight: 300; color: #f0ecdf;
-    letter-spacing: 1px; margin-bottom: 0.2rem;
+    font-family: 'Raleway', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 300; color: #f0ecdf; letter-spacing: 1px; margin-bottom: 0.2rem;
     text-shadow: 0 2px 24px rgba(0,0,0,0.9);
   }
   .vadodara-line2 {
-    font-family: 'Raleway', sans-serif;
-    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-    font-weight: 900; color: var(--orange);
-    letter-spacing: 3px; text-transform: uppercase;
+    font-family: 'Raleway', sans-serif; font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    font-weight: 900; color: var(--orange); letter-spacing: 3px; text-transform: uppercase;
     line-height: 1.05; margin-bottom: 0.2rem;
     text-shadow: 0 0 50px rgba(232,93,26,0.45);
   }
   .vadodara-line3 {
-    font-family: 'Raleway', sans-serif;
-    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
-    font-weight: 300; color: #f0ecdf;
-    letter-spacing: 1px; margin-bottom: 2.5rem;
+    font-family: 'Raleway', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 300; color: #f0ecdf; letter-spacing: 1px; margin-bottom: 2.5rem;
     text-shadow: 0 2px 24px rgba(0,0,0,0.9);
   }
   .vadodara-btn {
-    display: inline-block;
-    background: var(--orange); color: #fff;
-    text-decoration: underline;
-    padding: 0.9rem 3rem; border-radius: 50px;
+    display: inline-block; background: var(--orange); color: #fff;
+    text-decoration: underline; padding: 0.9rem 3rem; border-radius: 50px;
     font-family: 'Raleway', sans-serif; font-size: 1rem;
-    font-weight: 700; letter-spacing: 1px;
-    border: 2px solid var(--orange);
-    transition: all 0.35s;
-    box-shadow: 0 4px 30px rgba(232,93,26,0.4);
+    font-weight: 700; letter-spacing: 1px; border: 2px solid var(--orange);
+    transition: all 0.35s; box-shadow: 0 4px 30px rgba(232,93,26,0.4);
   }
   .vadodara-btn:hover {
     background: transparent; color: var(--orange);
-    box-shadow: 0 4px 44px rgba(232,93,26,0.6);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 44px rgba(232,93,26,0.6); transform: translateY(-2px);
   }
 
-  /* ------------------ WORK GRID ------------------ */
-  .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 4rem; }
-  .work-card {
-    aspect-ratio: 4/3; background: rgba(201,168,76,0.05);
-    border: 1px solid rgba(201,168,76,0.1);
-    display: flex; align-items: flex-end;
-    padding: 1.5rem; position: relative; overflow: hidden; cursor: pointer; transition: all 0.4s;
-  }
-  .work-card:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.08); }
-  .work-card-num {
-    position: absolute; top: 1.2rem; right: 1.5rem;
-    font-size: 0.65rem; letter-spacing: 3px; color: var(--gold); opacity: 0.5;
-  }
-  .work-card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--light); }
-
-  /* ------------------ FOOTER ------------------ */
-  footer { background: var(--darker); border-top: 1px solid rgba(201,168,76,0.15); padding: 4rem; }
-  .footer-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
-  }
-  .footer-brand { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); margin-bottom: 1rem; }
-  .footer-tagline { font-size: 0.85rem; line-height: 1.8; color: rgba(245,240,232,0.45); letter-spacing: 1px; }
-  .footer-col h4 { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-  .footer-col ul a { color: rgba(245,240,232,0.5); text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; transition: color 0.3s; }
-  .footer-col ul a:hover { color: var(--gold); }
-  .footer-bottom {
-    max-width: 1200px; margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1);
-  }
-  .footer-bottom p { font-size: 0.75rem; color: rgba(245,240,232,0.3); letter-spacing: 2px; }
-  .footer-socials { display: flex; gap: 1.5rem; }
-  .footer-socials a { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.3s; }
-  .footer-socials a:hover { color: var(--gold); }
-
-
-  /* ----------------------------------------------
-     PORTFOLIO SECTION
-  ---------------------------------------------- */
+  /* PORTFOLIO */
   .portfolio-section {
     width: 100%; padding: 8rem 4rem;
     background: var(--darker); position: relative; overflow: hidden;
@@ -519,16 +648,51 @@
   .portfolio-view-all:hover { color: var(--darker); }
   .portfolio-view-all:hover::before { transform: scaleX(1); }
 
-  /* ------------------ RESPONSIVE ------------------ */
+  /* FOOTER */
+  footer { background: var(--darker); border-top: 1px solid rgba(201,168,76,0.15); padding: 4rem; }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); margin-bottom: 1rem; }
+  .footer-tagline { font-size: 0.85rem; line-height: 1.8; color: rgba(245,240,232,0.45); letter-spacing: 1px; }
+  .footer-col h4 { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-col ul a { color: rgba(245,240,232,0.5); text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; transition: color 0.3s; }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(245,240,232,0.3); letter-spacing: 2px; }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.3s; }
+  .footer-socials a:hover { color: var(--gold); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1000px) {
+    .showcase-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 3.5rem;
+    }
+    .sc-left, .sc-right { max-width: 100%; padding: 0; justify-self: center; }
+    .sc-eyebrow, .sc-stats { justify-content: center; }
+    .sc-btn { margin: 0 auto; }
+    .sc-swiper-wrap { order: -1; }
+    .sc-vline-left, .sc-vline-right { display: none; }
+    .sc-quote { text-align: left; }
+    .sc-features li { text-align: left; }
+  }
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
     section { padding: 4rem 1.5rem; }
-    .services-section { padding: 5rem 1.5rem 4rem; }
+    .services-section, .showcase-section { padding: 5rem 1.5rem 4rem; }
     .layout-container[data-grid="3"],
     .layout-container[data-grid="4"] { grid-template-columns: repeat(2, 1fr); }
     .service-card-img { height: 160px; }
-    .work-grid { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
     .vadodara-line2 { font-size: 1.9rem; }
@@ -544,12 +708,13 @@
 </head>
 <body>
 
-<!-- -- NAV -- -->
+<!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">Vcreation</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#our-services">Services</a></li>
+    <li><a href="#showcase">Work</a></li>
     <li><a href="#vadodara">Partner</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -557,7 +722,7 @@
   <button class="nav-cta">Let's Talk</button>
 </nav>
 
-<!-- -- BANNER -- -->
+<!-- BANNER -->
 <div class="banner">
   <div class="banner-bg"></div>
   <div class="banner-overlay"></div>
@@ -575,25 +740,17 @@
 
 <div class="divider"></div>
 
-<!-- --------------------------------------
-     OUR SERVICES · createLayout animation
--------------------------------------- -->
+<!-- SERVICES -->
 <div class="services-section" id="our-services">
   <div class="services-inner">
-
     <div class="services-header">
       <p class="section-label"> Our Services </p>
       <h3 class="section-title">What We Create<br>For You</h3>
     </div>
-
-    <!-- createLayout targets this element -->
     <div class="layout-container" data-grid="1">
-
-      <!-- Card 1 · Logo & Branding -->
       <div class="service-card">
         <div class="service-card-img">
-          <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80"
-               alt="Logo & Branding" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" alt="Logo & Branding" loading="lazy">
           <div class="service-card-img-overlay"></div>
         </div>
         <div class="service-card-body">
@@ -604,12 +761,9 @@
           <span class="service-tag">Explore</span>
         </div>
       </div>
-
-      <!-- Card 2 · UI/UX Designing -->
       <div class="service-card">
         <div class="service-card-img">
-          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
-               alt="UI/UX Designing" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="UI/UX Designing" loading="lazy">
           <div class="service-card-img-overlay"></div>
         </div>
         <div class="service-card-body">
@@ -620,12 +774,9 @@
           <span class="service-tag">Explore</span>
         </div>
       </div>
-
-      <!-- Card 3 · Video Editing — fixed image -->
       <div class="service-card">
         <div class="service-card-img">
-          <img src="https://tse3.mm.bing.net/th/id/OIP.jkXXBh6-oE14bH1DPuneNAHaEK?pid=Api&h=220&P=0"
-               alt="Video Editing" loading="lazy">
+          <img src="https://tse3.mm.bing.net/th/id/OIP.jkXXBh6-oE14bH1DPuneNAHaEK?pid=Api&h=220&P=0" alt="Video Editing" loading="lazy">
           <div class="service-card-img-overlay"></div>
         </div>
         <div class="service-card-body">
@@ -636,15 +787,171 @@
           <span class="service-tag">Explore</span>
         </div>
       </div>
-
-    </div><!-- /.layout-container -->
-
-    <!-- Clickable grid-state indicator pills -->
+    </div>
     <div class="layout-pill" id="layout-pill">
       <span data-g="1" class="active" title="1 column"></span>
       <span data-g="2" title="2 columns"></span>
       <span data-g="3" title="3 columns"></span>
       <span data-g="4" title="4 columns"></span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- --------------------------------------------
+     SHOWCASE SECTION — Swiper Cards + Split Layout
+--------------------------------------------- -->
+<div class="showcase-section" id="showcase">
+
+  <!-- decorative vertical lines -->
+  <div class="sc-vline sc-vline-left"></div>
+  <div class="sc-vline sc-vline-right"></div>
+
+  <div class="showcase-inner">
+
+    <!-- LEFT -->
+    <div class="sc-left" id="sc-left">
+      <p class="sc-eyebrow">Visual Portfolio</p>
+      <h3>Where <em>Vision</em><br>Becomes Reality</h3>
+      <p>We don't just design — we craft experiences that linger. Every pixel, every frame, every brand touchpoint is treated as an opportunity to make something extraordinary.</p>
+
+      <div class="sc-stats">
+        <div>
+          <div class="sc-stat-num">240+</div>
+          <div class="sc-stat-label">Projects</div>
+        </div>
+        <div>
+          <div class="sc-stat-num">18</div>
+          <div class="sc-stat-label">Awards</div>
+        </div>
+        <div>
+          <div class="sc-stat-num">9</div>
+          <div class="sc-stat-label">Years</div>
+        </div>
+      </div>
+
+      <a href="#portfolio" class="sc-btn">
+        See All Work
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- SWIPER CENTER -->
+    <div class="sc-swiper-wrap" id="sc-swiper-wrap">
+      <div class="swiper sc-swiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=600&q=80" alt="Brand Identity">
+            <div class="slide-info">
+              <div class="slide-cat">Branding</div>
+              <div class="slide-title">Aura Identity</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80" alt="Mobile App UI">
+            <div class="slide-info">
+              <div class="slide-cat">UI / UX</div>
+              <div class="slide-title">Nexus App</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&q=80" alt="Logo Design">
+            <div class="slide-info">
+              <div class="slide-cat">Logo Design</div>
+              <div class="slide-title">Mark System</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Video Reel">
+            <div class="slide-info">
+              <div class="slide-cat">Video</div>
+              <div class="slide-title">2025 Showreel</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="Dashboard">
+            <div class="slide-info">
+              <div class="slide-cat">UI / UX</div>
+              <div class="slide-title">Pulse Dashboard</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Packaging">
+            <div class="slide-info">
+              <div class="slide-cat">Branding</div>
+              <div class="slide-title">Verdant Pack</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=600&q=80" alt="Social Media">
+            <div class="slide-info">
+              <div class="slide-cat">Motion</div>
+              <div class="slide-title">Social Content</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1586717799252-bd134ad00e26?w=600&q=80" alt="Editorial">
+            <div class="slide-info">
+              <div class="slide-cat">Editorial</div>
+              <div class="slide-title">Print Series</div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=600&q=80" alt="Typography">
+            <div class="slide-info">
+              <div class="slide-cat">Typography</div>
+              <div class="slide-title">Type Artistry</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="sc-right" id="sc-right">
+      <h3>Crafted with obsession,<br>delivered with precision</h3>
+
+      <ul class="sc-features">
+        <li>
+          <span class="sc-feat-icon">?</span>
+          <div>
+            <div class="sc-feat-title">Brand Strategy</div>
+            <div class="sc-feat-desc">Every visual decision is rooted in strategy — we align aesthetics with your business goals.</div>
+          </div>
+        </li>
+        <li>
+          <span class="sc-feat-icon">?</span>
+          <div>
+            <div class="sc-feat-title">Motion & Film</div>
+            <div class="sc-feat-desc">From 15-second reels to cinematic brand films, we make brands move with purpose.</div>
+          </div>
+        </li>
+        <li>
+          <span class="sc-feat-icon">?</span>
+          <div>
+            <div class="sc-feat-title">Digital Presence</div>
+            <div class="sc-feat-desc">Vadodara-rooted, globally minded — we build digital identities that travel far.</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="sc-quote">
+        <blockquote>"Design is not just what it looks like — it's how it makes people feel."</blockquote>
+        <cite>— Vcreation Studio Ethos</cite>
+      </div>
     </div>
 
   </div>
@@ -652,49 +959,18 @@
 
 <div class="divider"></div>
 
-<!-- --------------------------------------------------
-     VADODARA — ADVERTISING PARTNER
-     Real <img> for palace so the full image is visible
--------------------------------------------------- -->
-<div class="vadodara-section" id="vadodara">
+<!-- VADODARA -->
 
-  <!-- sky gradient overlay sits behind the text -->
-  <div class="vadodara-sky"></div>
-
-  <!-- spinning decorative star — top right -->
-  <div class="vadodara-star">?</div>
-
-  <!-- text block — rendered above the palace -->
-  <div class="vadodara-content">
-    <p class="vadodara-line1">Your creative</p>
-    <p class="vadodara-line2">ADVERTISING PARTNER</p>
-    <p class="vadodara-line3">in Vadodara</p>
-    <a href="#contact" class="vadodara-btn">About Us</a>
-  </div>
-
-  <!-- Palace image — full width, height auto = zero cropping -->
   <div class="vadodara-palace-wrap">
-    <img
-      src="https://www.shadowsgalore.com/wp-content/uploads/2016/10/Laxmi_Vilas_Palace.jpg"
-      alt="Laxmi Vilas Palace Vadodara"
-      loading="lazy"
-    >
+    <img src="https://www.shadowsgalore.com/wp-content/uploads/2016/10/Laxmi_Vilas_Palace.jpg" alt="Laxmi Vilas Palace Vadodara" loading="lazy">
   </div>
-
 </div>
 
 <div class="divider"></div>
 
-<!-- -- ABOUT -- -->
-
-
-<!-- --------------------------------------------------
-     PORTFOLIO SECTION — 6 Projects
--------------------------------------------------- -->
+<!-- PORTFOLIO -->
 <div class="portfolio-section" id="portfolio">
   <div class="portfolio-inner">
-
-    <!-- Header + filter buttons -->
     <div class="portfolio-header">
       <div class="portfolio-header-left">
         <p class="section-label">02 Portfolio</p>
@@ -707,15 +983,10 @@
         <button class="pf-filter-btn">Video</button>
       </div>
     </div>
-
-    <!-- Portfolio Grid — 6 items -->
     <div class="portfolio-grid">
-
-      <!-- 01 · Featured · Branding (spans 2 cols) -->
       <div class="portfolio-item">
         <span class="portfolio-num">01</span>
-        <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=1200&q=80"
-             alt="Brand Identity Project" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=1200&q=80" alt="Brand Identity Project" loading="lazy">
         <div class="portfolio-item-overlay">
           <span class="portfolio-cat">Branding</span>
           <h4 class="portfolio-item-title">Aura Brand Identity System</h4>
@@ -723,12 +994,9 @@
           <a href="#" class="portfolio-item-cta">View Project ?</a>
         </div>
       </div>
-
-      <!-- 02 · UI/UX -->
       <div class="portfolio-item">
         <span class="portfolio-num">02</span>
-        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80"
-             alt="UI/UX Design" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80" alt="UI/UX Design" loading="lazy">
         <div class="portfolio-item-overlay">
           <span class="portfolio-cat">UI / UX</span>
           <h4 class="portfolio-item-title">Nexus Mobile App Design</h4>
@@ -736,12 +1004,9 @@
           <a href="#" class="portfolio-item-cta">View Project ?</a>
         </div>
       </div>
-
-      <!-- 03 · Video -->
       <div class="portfolio-item">
         <span class="portfolio-num">03</span>
-        <img src="https://blog.hootsuite.com/wp-content/uploads/2022/10/free-video-editing-software-01.png"
-             alt="Video Production" loading="lazy">
+        <img src="https://blog.hootsuite.com/wp-content/uploads/2022/10/free-video-editing-software-01.png" alt="Video Production" loading="lazy">
         <div class="portfolio-item-overlay">
           <span class="portfolio-cat">Video</span>
           <h4 class="portfolio-item-title">Lumina Brand Film</h4>
@@ -749,12 +1014,9 @@
           <a href="#" class="portfolio-item-cta">View Project ?</a>
         </div>
       </div>
-
-      <!-- 04 · Branding -->
       <div class="portfolio-item">
         <span class="portfolio-num">04</span>
-        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
-             alt="Packaging Design" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Packaging Design" loading="lazy">
         <div class="portfolio-item-overlay">
           <span class="portfolio-cat">Branding</span>
           <h4 class="portfolio-item-title">Verdant Packaging Design</h4>
@@ -762,12 +1024,9 @@
           <a href="#" class="portfolio-item-cta">View Project ?</a>
         </div>
       </div>
-
-      <!-- 05 · UI/UX -->
       <div class="portfolio-item">
         <span class="portfolio-num">05</span>
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-             alt="Dashboard UI" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Dashboard UI" loading="lazy">
         <div class="portfolio-item-overlay">
           <span class="portfolio-cat">UI / UX</span>
           <h4 class="portfolio-item-title">Pulse SaaS Dashboard</h4>
@@ -775,12 +1034,9 @@
           <a href="#" class="portfolio-item-cta">View Project ?</a>
         </div>
       </div>
-
-      <!-- 06 · Featured · Video (spans 2 cols) -->
       <div class="portfolio-item">
         <span class="portfolio-num">06</span>
-        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=80"
-             alt="Motion Reel" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=80" alt="Motion Reel" loading="lazy">
         <div class="portfolio-item-overlay">
           <span class="portfolio-cat">Video · Motion</span>
           <h4 class="portfolio-item-title">Vcreation 2025 Showreel</h4>
@@ -788,20 +1044,16 @@
           <a href="#" class="portfolio-item-cta">Watch Reel ?</a>
         </div>
       </div>
-
-    </div><!-- /.portfolio-grid -->
-
-    <!-- View All CTA -->
+    </div>
     <div class="portfolio-footer">
       <a href="#" class="portfolio-view-all">View All Projects &nbsp;?</a>
     </div>
-
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- -- FOOTER -- -->
+<!-- FOOTER -->
 <footer id="contact">
   <div class="footer-inner">
     <div>
@@ -813,15 +1065,16 @@
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#our-services">Services</a></li>
+        <li><a href="#showcase">Showcase</a></li>
         <li><a href="#vadodara">Partner</a></li>
-        <li><a href="#work">Work</a></li>
+        <li><a href="#portfolio">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="/cdn-cgi/l/email-protection#375f525b5b58774154455256435e585919444342535e58"><span class="__cf_email__" data-cfemail="b5ddd0d9d9daf5c3d6c7d0d4c1dcdadb9bc6c1c0d1dcda">[email&#160;protected]</span></a></li>
+        <li><a href="mailto:hello@vcreation.in">hello@vcreation.in</a></li>
         <li><a href="#">+91 000 000 0000</a></li>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">Behance</a></li>
@@ -838,12 +1091,11 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script type="module">
   import { createLayout, animate, stagger } from 'https://esm.sh/animejs';
 
-  /* --------------------------------------------------
-     1. createLayout — services grid  1 ? 2 ? 3 ? 4 ? …
-  -------------------------------------------------- */
+  /* --- Services createLayout animation --- */
   const layout = createLayout('.layout-container');
   const pills  = document.querySelectorAll('#layout-pill span');
   let i = 0;
@@ -851,61 +1103,45 @@
   function syncPills(n) {
     pills.forEach(p => p.classList.toggle('active', +p.dataset.g === n));
   }
-
   function animateLayout() {
     const next = (++i % 4) + 1;
     syncPills(next);
     return layout.update(({ root }) => {
       root.dataset.grid = next;
     }, {
-      duration: 1000,
-      delay: stagger(150),
+      duration: 1000, delay: stagger(150),
       onComplete: () => animateLayout()
     });
   }
-
   setTimeout(() => animateLayout(), 1400);
 
   pills.forEach(pill => {
     pill.addEventListener('click', () => {
       const t = +pill.dataset.g;
-      i = t - 1;
-      syncPills(t);
-      layout.update(({ root }) => { root.dataset.grid = t; }, {
-        duration: 700, delay: stagger(100)
-      });
+      i = t - 1; syncPills(t);
+      layout.update(({ root }) => { root.dataset.grid = t; }, { duration: 700, delay: stagger(100) });
     });
   });
 
-  /* --------------------------------------------------
-     2. Banner name — bounce + rotate animation
-  -------------------------------------------------- */
+  /* --- Banner title animation --- */
   const h2 = document.getElementById('animated-title');
   h2.innerHTML = '';
   const chars = [];
   for (const ch of 'Vcreation') {
     const s = document.createElement('span');
-    s.className = 'char';
-    s.textContent = ch;
-    h2.appendChild(s);
-    chars.push(s);
+    s.className = 'char'; s.textContent = ch;
+    h2.appendChild(s); chars.push(s);
   }
-
   animate(chars, {
     y: [
       { to: '-2.75rem', ease: 'outExpo',   duration: 600 },
-        { to: 0,          ease: 'outBounce',  duration: 800, delay: 100 }
+      { to: 0,          ease: 'outBounce',  duration: 800, delay: 100 }
     ],
     rotate: { from: '-1turn', delay: 0 },
-    delay:     stagger(50),
-    ease:      'inOutCirc',
-    loopDelay: 1000,
-    loop:      true
+    delay: stagger(50), ease: 'inOutCirc', loopDelay: 1000, loop: true
   });
 
-  /* --------------------------------------------------
-     3. Portfolio filter buttons — active state toggle
-  -------------------------------------------------- */
+  /* --- Portfolio filter --- */
   document.querySelectorAll('.pf-filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.pf-filter-btn').forEach(b => b.classList.remove('active'));
@@ -913,29 +1149,52 @@
     });
   });
 
-  /* Portfolio items — entrance animation on scroll */
+  /* --- Portfolio entrance animation --- */
   const pfItems = document.querySelectorAll('.portfolio-item');
-  const observer = new IntersectionObserver((entries) => {
+  const pfObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         animate(entry.target, {
-          opacity: [{ from: 0, to: 1 }],
-          y: [{ from: 30, to: 0 }],
-          duration: 700,
-          ease: 'outExpo',
+          opacity: [{ from: 0, to: 1 }], y: [{ from: 30, to: 0 }],
+          duration: 700, ease: 'outExpo',
           delay: (+entry.target.dataset.pfIdx || 0) * 80
         });
-        observer.unobserve(entry.target);
+        pfObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
-
   pfItems.forEach((item, idx) => {
-    item.dataset.pfIdx = idx;
-    item.style.opacity = 0;
-    observer.observe(item);
+    item.dataset.pfIdx = idx; item.style.opacity = 0; pfObserver.observe(item);
   });
+
+  /* --- Showcase section scroll reveal --- */
+  const showcaseObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.getElementById('sc-left').classList.add('visible');
+        document.getElementById('sc-swiper-wrap').classList.add('visible');
+        document.getElementById('sc-right').classList.add('visible');
+        showcaseObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.15 });
+  showcaseObserver.observe(document.getElementById('showcase'));
 </script>
 
+<script>
+  /* Swiper — initialised outside the module so it runs after CDN load */
+  document.addEventListener('DOMContentLoaded', () => {
+    new Swiper('.sc-swiper', {
+      effect: 'cards',
+      grabCursor: true,
+      loop: true,
+      autoplay: {
+        delay: 2600,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      }
+    });
+  });
+</script>
 </body>
 </html>
