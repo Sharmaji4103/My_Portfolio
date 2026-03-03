@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Vcreation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #c9a84c;
+    --orange: #e85d1a;
+    --dark: #0a0a0a;
+    --darker: #050505;
+    --light: #f5f0e8;
+    --accent: #e8d5a3;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--darker);
+    color: var(--light);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed; z-index: 9999; pointer-events: none;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s;
+  }
+  .cursor-ring {
+    position: fixed; z-index: 9998; pointer-events: none;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.45);
+    transform: translate(-50%, -50%);
+    transition: width 0.35s ease, height 0.35s ease, border-color 0.3s;
+  }
+  .cursor.cursor-view { width: 70px; height: 70px; background: rgba(201,168,76,0.15); }
+  .cursor.cursor-view::after {
+    content: 'VIEW';
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 0.45rem; letter-spacing: 3px; color: var(--gold); font-weight: 700;
+    font-family: 'Raleway', sans-serif;
+  }
+  .cursor.cursor-view + .cursor-ring { width: 80px; height: 80px; border-color: rgba(201,168,76,0.6); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(5,5,5,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    transition: background 0.4s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--gold); letter-spacing: 2px; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--accent); text-decoration: none; font-size: 0.85rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--gold); color: var(--gold);
+    padding: 0.6rem 1.6rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    cursor: none; transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--darker); }
+
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.25), transparent);
+  }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    position: relative; min-height: 62vh;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    overflow: hidden; padding: 0 4rem 5rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 10% 60%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 90% 20%, rgba(232,93,26,0.04) 0%, transparent 60%),
+      linear-gradient(160deg, #08070c 0%, #050505 60%, #080605 100%);
+  }
+  /* diagonal grid */
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    transform: skewY(-4deg); transform-origin: top left;
+  }
+  /* large decorative letter */
+  .hero-bg::after {
+    content: 'PORTFOLIO';
+    position: absolute; right: -2rem; bottom: -3rem;
+    font-family: 'Playfair Display', serif; font-size: 14vw;
+    font-weight: 900; letter-spacing: -5px; line-height: 1;
+    color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.05);
+    user-select: none; pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 750px; padding-top: 8rem; }
+  .hero-breadcrumb {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 0.65rem; letter-spacing: 6px; text-transform: uppercase;
+    color: rgba(201,168,76,0.55); margin-bottom: 1.8rem;
+  }
+  .hero-breadcrumb::before {
+    content: ''; display: block; width: 36px; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.5));
+  }
+  .hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900;
+    line-height: 0.95; margin-bottom: 1.8rem;
+  }
+  .hero-content h1 .w1 {
+    display: block; color: var(--light);
+    opacity: 0; transform: translateY(25px);
+    animation: riseUp 0.9s 0.1s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-content h1 .w2 {
+    display: block; color: transparent;
+    -webkit-text-stroke: 1.5px rgba(201,168,76,0.5);
+    opacity: 0; transform: translateY(25px);
+    animation: riseUp 0.9s 0.25s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-content h1 .w3 {
+    display: inline; color: var(--gold); font-style: italic;
+    opacity: 0; transform: translateY(25px);
+    animation: riseUp 0.9s 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes riseUp { to { opacity: 1; transform: translateY(0); } }
+  .hero-sub {
+    font-size: 0.9rem; line-height: 1.85; color: rgba(245,240,232,0.45);
+    font-weight: 300; max-width: 480px;
+    opacity: 0; animation: riseUp 0.9s 0.55s forwards;
+  }
+
+  /* live project count badge */
+  .hero-badge {
+    position: absolute; right: 4rem; bottom: 5rem; z-index: 2;
+    text-align: center; opacity: 0;
+    animation: riseUp 0.9s 0.7s forwards;
+  }
+  .hero-badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; font-weight: 900; color: var(--gold); line-height: 1;
+    display: block;
+  }
+  .hero-badge-label {
+    font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(245,240,232,0.35); margin-top: 4px; display: block;
+  }
+  .hero-badge-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    margin: 1rem auto 0; opacity: 0.4;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    width: 100%; padding: 0 4rem;
+    position: sticky; top: 73px; z-index: 100;
+    background: rgba(5,5,5,0.92); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .filter-tabs {
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  .filter-tabs::-webkit-scrollbar { display: none; }
+  .ftab {
+    background: transparent; border: none; border-bottom: 2px solid transparent;
+    color: rgba(245,240,232,0.35); padding: 1.4rem 1.8rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    cursor: none; white-space: nowrap; transition: color 0.3s, border-color 0.3s;
+  }
+  .ftab:hover { color: var(--accent); }
+  .ftab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .filter-right {
+    display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0;
+  }
+  .view-toggle {
+    display: flex; gap: 0.4rem;
+  }
+  .vtbtn {
+    background: transparent; border: 1px solid rgba(201,168,76,0.15);
+    color: rgba(245,240,232,0.3); width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: all 0.3s;
+  }
+  .vtbtn.active, .vtbtn:hover {
+    border-color: rgba(201,168,76,0.5); color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+  .project-count-label {
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(201,168,76,0.4);
+  }
+
+  /* ── MASONRY / GRID WRAPPER ── */
+  .portfolio-wrap {
+    padding: 4rem; max-width: 1500px; margin: 0 auto;
+  }
+
+  /* ═══ MASONRY VIEW ═══ */
+  .masonry-grid {
+    columns: 3; column-gap: 1.5rem;
+    display: block;
+  }
+  .masonry-grid.hidden { display: none; }
+
+  .m-item {
+    break-inside: avoid; margin-bottom: 1.5rem;
+    position: relative; overflow: hidden;
+    display: block; cursor: none;
+    border: 1px solid rgba(201,168,76,0.08);
+    transition: border-color 0.4s;
+  }
+  .m-item:hover { border-color: rgba(201,168,76,0.35); }
+
+  .m-item img {
+    width: 100%; display: block;
+    filter: brightness(0.7) saturate(0.8);
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s;
+  }
+  .m-item:hover img { transform: scale(1.06); filter: brightness(0.9) saturate(1.05); }
+
+  .m-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.2) 45%, transparent 70%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.8rem;
+  }
+  .m-item:hover .m-overlay { opacity: 1; }
+
+  /* top-right expand icon */
+  .m-expand {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(201,168,76,0.15); backdrop-filter: blur(8px);
+    border: 1px solid rgba(201,168,76,0.4);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0.7) rotate(-45deg);
+    transition: opacity 0.4s, transform 0.4s;
+    color: var(--gold);
+  }
+  .m-item:hover .m-expand { opacity: 1; transform: scale(1) rotate(0deg); }
+
+  .m-cat {
+    font-size: 0.58rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.8; margin-bottom: 0.4rem;
+  }
+  .m-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--light); line-height: 1.2;
+    margin-bottom: 0.35rem;
+  }
+  .m-meta {
+    font-size: 0.7rem; color: rgba(245,240,232,0.45); font-weight: 300;
+  }
+
+  /* ═══ GRID VIEW ═══ */
+  .standard-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .standard-grid.hidden { display: none; }
+
+  .g-item {
+    position: relative; overflow: hidden; cursor: none;
+    border: 1px solid rgba(201,168,76,0.08);
+    transition: border-color 0.4s, box-shadow 0.4s;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.4s, box-shadow 0.4s;
+  }
+  .g-item.visible { opacity: 1; transform: translateY(0); }
+  .g-item:hover { border-color: rgba(201,168,76,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+  .g-img {
+    position: relative; overflow: hidden; aspect-ratio: 4/3;
+  }
+  .g-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.7) saturate(0.8);
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s;
+    display: block;
+  }
+  .g-item:hover .g-img img { transform: scale(1.07); filter: brightness(0.88) saturate(1.05); }
+
+  /* shimmer sweep */
+  .g-img::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(105deg, transparent 40%, rgba(201,168,76,0.1) 50%, transparent 60%);
+    transform: translateX(-100%); transition: transform 0.6s ease;
+  }
+  .g-item:hover .g-img::before { transform: translateX(100%); }
+
+  .g-img-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(to top, rgba(5,5,5,0.85) 0%, transparent 55%);
+  }
+
+  /* play/expand icon */
+  .g-action {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 3; width: 54px; height: 54px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.7);
+    background: rgba(5,5,5,0.6); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 0.7rem;
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), background 0.3s;
+  }
+  .g-item:hover .g-action {
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(201,168,76,0.12);
+  }
+
+  /* tag strip */
+  .g-tags {
+    position: absolute; top: 1rem; left: 1rem; z-index: 3;
+    display: flex; gap: 0.4rem;
+  }
+  .g-tag {
+    font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase;
+    background: rgba(5,5,5,0.7); backdrop-filter: blur(8px);
+    border: 1px solid rgba(201,168,76,0.3); color: var(--gold);
+    padding: 0.25rem 0.7rem;
+    transform: translateY(-4px); opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s;
+  }
+  .g-item:hover .g-tag { transform: translateY(0); opacity: 1; }
+
+  .g-info { padding: 1.5rem 1.8rem 2rem; }
+  .g-info-top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.6rem;
+  }
+  .g-cat {
+    font-size: 0.58rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.7;
+  }
+  .g-year {
+    font-size: 0.65rem; color: rgba(245,240,232,0.25);
+    font-family: 'Playfair Display', serif; font-style: italic;
+  }
+  .g-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--light);
+    margin-bottom: 0.5rem; line-height: 1.25;
+  }
+  .g-client {
+    font-size: 0.75rem; color: rgba(245,240,232,0.35);
+    font-weight: 300; margin-bottom: 1.2rem;
+  }
+  .g-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.08);
+  }
+  .g-stats { display: flex; gap: 1.2rem; }
+  .g-stat {
+    font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.28);
+  }
+  .g-stat strong { color: rgba(201,168,76,0.5); font-weight: 600; }
+  .g-cta {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(201,168,76,0.45); font-weight: 600;
+    transition: color 0.3s, gap 0.3s; cursor: none;
+  }
+  .g-item:hover .g-cta { color: var(--gold); gap: 12px; }
+  .g-cta svg { transition: transform 0.3s; }
+  .g-item:hover .g-cta svg { transform: translateX(3px); }
+
+  /* ── FEATURED ROW ── */
+  .featured-row {
+    width: 100%; padding: 0 4rem 0;
+  }
+  .featured-row-inner {
+    max-width: 1500px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .feat-item {
+    position: relative; overflow: hidden; cursor: none;
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: border-color 0.4s;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease, border-color 0.4s;
+  }
+  .feat-item.visible { opacity: 1; transform: translateY(0); }
+  .feat-item:nth-child(2) { transition-delay: 0.15s; }
+  .feat-item:hover { border-color: rgba(201,168,76,0.4); }
+
+  .feat-item img {
+    width: 100%; height: 480px; object-fit: cover; display: block;
+    filter: brightness(0.65) saturate(0.8);
+    transition: transform 0.8s cubic-bezier(0.22,1,0.36,1), filter 0.5s;
+  }
+  .feat-item:hover img { transform: scale(1.05); filter: brightness(0.82) saturate(1.05); }
+
+  .feat-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.2) 40%, transparent 65%);
+    padding: 2.5rem;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .feat-label {
+    position: absolute; top: 1.5rem; left: 1.5rem;
+    font-size: 0.55rem; letter-spacing: 4px; text-transform: uppercase;
+    background: var(--gold); color: var(--darker);
+    padding: 0.3rem 0.9rem; font-weight: 700;
+  }
+  .feat-expand {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.5); background: rgba(5,5,5,0.5);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); opacity: 0; transform: rotate(-45deg) scale(0.8);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .feat-item:hover .feat-expand { opacity: 1; transform: rotate(0deg) scale(1); }
+
+  .feat-cat {
+    font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.8; margin-bottom: 0.5rem;
+  }
+  .feat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--light); line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+  .feat-item:last-child .feat-title { font-size: 1.5rem; }
+  .feat-meta { font-size: 0.75rem; color: rgba(245,240,232,0.4); font-weight: 300; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(0,0,0,0); pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.4s;
+  }
+  .lightbox.open {
+    background: rgba(5,5,5,0.97);
+    pointer-events: all;
+  }
+  .lb-inner {
+    position: relative; max-width: 1100px; width: 95%;
+    display: grid; grid-template-columns: 1.1fr 0.9fr;
+    gap: 0; max-height: 90vh; overflow: hidden;
+    opacity: 0; transform: scale(0.94) translateY(20px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .lightbox.open .lb-inner {
+    opacity: 1; transform: scale(1) translateY(0);
+  }
+
+  .lb-img-wrap {
+    position: relative; overflow: hidden;
+    max-height: 90vh;
+  }
+  .lb-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .lb-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .lb-info {
+    background: #080707; padding: 3.5rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow-y: auto;
+  }
+  .lb-close {
+    position: absolute; top: 1.5rem; right: 1.5rem; z-index: 2;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.3); background: rgba(5,5,5,0.8);
+    color: var(--gold); display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: all 0.3s;
+  }
+  .lb-close:hover { background: var(--gold); color: var(--darker); border-color: var(--gold); }
+
+  .lb-cat {
+    font-size: 0.62rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 12px;
+  }
+  .lb-cat::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  .lb-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--light);
+    line-height: 1.1; margin-bottom: 0.8rem;
+  }
+  .lb-client {
+    font-size: 0.8rem; color: rgba(245,240,232,0.4); margin-bottom: 2rem;
+    font-weight: 300; font-style: italic; font-family: 'Playfair Display', serif;
+  }
+  .lb-divider {
+    width: 40px; height: 1px; background: rgba(201,168,76,0.3); margin-bottom: 2rem;
+  }
+  .lb-desc {
+    font-size: 0.87rem; line-height: 1.9;
+    color: rgba(245,240,232,0.5); font-weight: 300; margin-bottom: 2.5rem;
+  }
+  .lb-details {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem;
+  }
+  .lb-detail-item { padding: 1rem; border: 1px solid rgba(201,168,76,0.1); }
+  .lb-detail-label {
+    font-size: 0.55rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(201,168,76,0.45); margin-bottom: 0.4rem;
+  }
+  .lb-detail-val {
+    font-size: 0.82rem; color: var(--light); font-weight: 600;
+  }
+  .lb-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+  .lb-tag {
+    font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.2); color: rgba(201,168,76,0.6);
+    padding: 0.3rem 0.9rem;
+  }
+  .lb-actions { display: flex; gap: 1rem; }
+  .lb-btn-primary {
+    flex: 1; background: var(--gold); color: var(--darker);
+    padding: 0.9rem; font-family: 'Raleway', sans-serif;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; border: none; cursor: none; text-align: center;
+    text-decoration: none; display: block; transition: background 0.3s;
+  }
+  .lb-btn-primary:hover { background: var(--orange); color: #fff; }
+  .lb-btn-sec {
+    border: 1px solid rgba(201,168,76,0.25); color: var(--gold);
+    padding: 0.9rem 1.5rem; font-family: 'Raleway', sans-serif;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; background: transparent; cursor: none;
+    transition: all 0.3s;
+  }
+  .lb-btn-sec:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+
+  /* prev/next arrows */
+  .lb-nav {
+    position: absolute; bottom: 1.5rem; left: 3.5rem;
+    display: flex; gap: 0.8rem;
+  }
+  .lb-arrow {
+    width: 40px; height: 40px; border: 1px solid rgba(201,168,76,0.25);
+    background: transparent; color: rgba(201,168,76,0.6);
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: all 0.3s;
+  }
+  .lb-arrow:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    width: 100%; padding: 5rem 4rem;
+    background: linear-gradient(180deg, #050505 0%, #08060a 60%, #050505 100%);
+    position: relative; overflow: hidden;
+  }
+  .stats-strip::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .stats-inner {
+    max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; border: 1px solid rgba(201,168,76,0.1);
+  }
+  .stat-item {
+    padding: 3rem 2rem; text-align: center;
+    border-right: 1px solid rgba(201,168,76,0.1);
+    position: relative; transition: background 0.4s;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.4s;
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.1s; }
+  .stat-item:nth-child(3) { transition-delay: 0.2s; }
+  .stat-item:nth-child(4) { transition-delay: 0.3s; border-right: none; }
+  .stat-item::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 0; height: 1px; background: var(--gold); transition: width 0.4s;
+  }
+  .stat-item:hover { background: rgba(201,168,76,0.02); }
+  .stat-item:hover::after { width: 50%; }
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900; color: var(--gold); line-height: 1; display: block;
+  }
+  .stat-lbl {
+    font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(245,240,232,0.3); display: block; margin-top: 0.4rem;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    position: relative; width: 100%; padding: 9rem 4rem;
+    overflow: hidden; text-align: center;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-section::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+    background-size: 70px 70px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+  .cta-inner .section-label {
+    font-size: 0.65rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1.5rem;
+  }
+  .cta-inner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900;
+    color: var(--light); line-height: 1.05; margin-bottom: 1.5rem;
+  }
+  .cta-inner h2 em { font-style: italic; color: var(--gold); }
+  .cta-inner p {
+    font-size: 0.9rem; line-height: 1.85; color: rgba(245,240,232,0.42);
+    font-weight: 300; margin-bottom: 3rem;
+  }
+  .cta-btns { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+  .cta-primary {
+    background: var(--gold); color: var(--darker); border: 1px solid var(--gold);
+    padding: 1.1rem 3rem; font-family: 'Raleway', sans-serif; font-size: 0.8rem;
+    font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none; transition: all 0.4s; position: relative; overflow: hidden;
+  }
+  .cta-primary::before {
+    content: ''; position: absolute; inset: 0; background: var(--orange);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s; z-index: 0;
+  }
+  .cta-primary span { position: relative; z-index: 1; }
+  .cta-primary:hover::before { transform: scaleX(1); }
+  .cta-primary:hover { color: #fff; }
+  .cta-secondary {
+    background: transparent; color: var(--accent); border: 1px solid rgba(201,168,76,0.25);
+    padding: 1.1rem 3rem; font-family: 'Raleway', sans-serif; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none; transition: all 0.4s;
+  }
+  .cta-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 900;
+    color: var(--gold); letter-spacing: 2px; text-decoration: none;
+  }
+  .footer-copy {
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.25);
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.3); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .masonry-grid { columns: 2; }
+    .standard-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-row-inner { grid-template-columns: 1fr; }
+    .feat-item img { height: 380px; }
+    .lb-inner { grid-template-columns: 1fr; max-height: 95vh; overflow-y: auto; }
+    .lb-img-wrap img { max-height: 50vh; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 0 1.5rem 4rem; }
+    .hero-badge { display: none; }
+    .filter-bar { padding: 0 1.5rem; }
+    .portfolio-wrap { padding: 2rem 1.5rem; }
+    .featured-row { padding: 0 1.5rem; }
+    .masonry-grid { columns: 1; }
+    .standard-grid { grid-template-columns: 1fr; }
+    .stats-strip, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(4) { border-right: none; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Vcreation</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#" class="active">Portfolio</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Quote</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-breadcrumb">Our Work</div>
+    <h1>
+      <span class="w1">Visual</span>
+      <span class="w2">Stories</span>
+      <span class="w3"> We've Told</span>
+    </h1>
+    <p class="hero-sub">Every project in our portfolio is a story that matters — a brand elevated, a memory preserved, a moment made eternal through the art of visual craft.</p>
+  </div>
+  <div class="hero-badge">
+    <span class="hero-badge-num">24</span>
+    <span class="hero-badge-label">Featured Works</span>
+    <div class="hero-badge-line"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-tabs">
+    <button class="ftab active" onclick="filterPortfolio('all', this)">All Work</button>
+    <button class="ftab" onclick="filterPortfolio('video', this)">Video</button>
+    <button class="ftab" onclick="filterPortfolio('photo', this)">Photography</button>
+    <button class="ftab" onclick="filterPortfolio('wedding', this)">Weddings</button>
+    <button class="ftab" onclick="filterPortfolio('brand', this)">Brand</button>
+    <button class="ftab" onclick="filterPortfolio('event', this)">Events</button>
+  </div>
+  <div class="filter-right">
+    <span class="project-count-label" id="countLabel">24 Projects</span>
+    <div class="view-toggle">
+      <button class="vtbtn active" id="masonryBtn" onclick="setView('masonry')" title="Masonry">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+          <rect x="0" y="0" width="6" height="8"/><rect x="8" y="0" width="6" height="5"/>
+          <rect x="0" y="10" width="6" height="4"/><rect x="8" y="7" width="6" height="7"/>
+        </svg>
+      </button>
+      <button class="vtbtn" id="gridBtn" onclick="setView('grid')" title="Grid">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+          <rect x="0" y="0" width="6" height="6"/><rect x="8" y="0" width="6" height="6"/>
+          <rect x="0" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED ROW -->
+<div class="featured-row" style="padding-top: 4rem;">
+  <div class="featured-row-inner">
+    <div class="feat-item" data-category="video" data-index="0"
+         onclick="openLightbox(0)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <span class="feat-label">Featured</span>
+      <div class="feat-expand">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      </div>
+      <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1000&q=80" alt="Brand Film">
+      <div class="feat-overlay">
+        <div class="feat-cat">Brand Film</div>
+        <div class="feat-title">Luxe Interiors — A Vision in Space</div>
+        <div class="feat-meta">Vadodara · 2024 · 4K Cinematic</div>
+      </div>
+    </div>
+    <div class="feat-item" data-category="wedding" data-index="1"
+         onclick="openLightbox(1)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Wedding Film">
+      <div class="feat-overlay">
+        <div class="feat-cat">Wedding Film</div>
+        <div class="feat-title">Shreya & Karan — A Golden Day</div>
+        <div class="feat-meta">Vadodara · 2024 · Cinematic</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MASONRY GRID -->
+<div class="portfolio-wrap">
+  <div class="masonry-grid" id="masonryGrid">
+
+    <div class="m-item" data-category="photo" data-index="2"
+         onclick="openLightbox(2)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Product">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Product Photography</div>
+        <div class="m-title">Elegance Jewels Collection</div>
+        <div class="m-meta">Studio · 2024</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="event" data-index="3"
+         onclick="openLightbox(3)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Event">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Corporate Event</div>
+        <div class="m-title">NovaTech Annual Summit</div>
+        <div class="m-meta">Baroda · 2024</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="brand" data-index="4"
+         onclick="openLightbox(4)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=600&q=80" alt="Brand">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Brand Campaign</div>
+        <div class="m-title">Artisan Chai Co. Identity</div>
+        <div class="m-meta">Vadodara · 2023</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="wedding" data-index="5"
+         onclick="openLightbox(5)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="Wedding">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Wedding Photography</div>
+        <div class="m-title">Ananya & Rohan — Forever</div>
+        <div class="m-meta">Ahmedabad · 2024</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="video" data-index="6"
+         onclick="openLightbox(6)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=80" alt="Video">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Documentary</div>
+        <div class="m-title">Vadodara Heritage Reel</div>
+        <div class="m-meta">City Series · 2023</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="photo" data-index="7"
+         onclick="openLightbox(7)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Landscape">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Aerial Photography</div>
+        <div class="m-title">Skyline Builders — Vista</div>
+        <div class="m-meta">Drone · 2024</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="brand" data-index="8"
+         onclick="openLightbox(8)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80" alt="Brand">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Product Video</div>
+        <div class="m-title">Raza Foods — Freshness</div>
+        <div class="m-meta">Commercial · 2023</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="event" data-index="9"
+         onclick="openLightbox(9)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80" alt="Event">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Cultural Event</div>
+        <div class="m-title">Navratri 2024 — The Grand Stage</div>
+        <div class="m-meta">Vadodara · 2024</div>
+      </div>
+    </div>
+
+    <div class="m-item" data-category="wedding" data-index="10"
+         onclick="openLightbox(10)"
+         onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="Wedding detail">
+      <div class="m-expand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      <div class="m-overlay">
+        <div class="m-cat">Wedding Details</div>
+        <div class="m-title">Mehndi Moments — Priya</div>
+        <div class="m-meta">Vadodara · 2024</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STANDARD GRID (hidden by default) -->
+  <div class="standard-grid hidden" id="standardGrid">
+
+    <div class="g-item" data-category="video" data-index="0" onclick="openLightbox(0)" onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <div class="g-img">
+        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=700&q=80" alt="">
+        <div class="g-img-overlay"></div>
+        <div class="g-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="g-tags"><span class="g-tag">Featured</span><span class="g-tag">4K</span></div>
+      </div>
+      <div class="g-info">
+        <div class="g-info-top"><span class="g-cat">Brand Film</span><span class="g-year">2024</span></div>
+        <div class="g-title">Luxe Interiors — A Vision in Space</div>
+        <div class="g-client">Client: Luxe Interiors Pvt. Ltd.</div>
+        <div class="g-bottom">
+          <div class="g-stats"><span class="g-stat"><strong>4K</strong> Cinematic</span><span class="g-stat"><strong>3</strong> mins</span></div>
+          <div class="g-cta">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g-item" data-category="wedding" data-index="1" onclick="openLightbox(1)" onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <div class="g-img">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=80" alt="">
+        <div class="g-img-overlay"></div>
+        <div class="g-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="g-tags"><span class="g-tag">Wedding</span></div>
+      </div>
+      <div class="g-info">
+        <div class="g-info-top"><span class="g-cat">Wedding Film</span><span class="g-year">2024</span></div>
+        <div class="g-title">Shreya & Karan — A Golden Day</div>
+        <div class="g-client">Private Client · Vadodara</div>
+        <div class="g-bottom">
+          <div class="g-stats"><span class="g-stat"><strong>2</strong> Day Shoot</span><span class="g-stat"><strong>12</strong> min film</span></div>
+          <div class="g-cta">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g-item" data-category="photo" data-index="2" onclick="openLightbox(2)" onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <div class="g-img">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="">
+        <div class="g-img-overlay"></div>
+        <div class="g-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="g-tags"><span class="g-tag">Product</span></div>
+      </div>
+      <div class="g-info">
+        <div class="g-info-top"><span class="g-cat">Product Photography</span><span class="g-year">2024</span></div>
+        <div class="g-title">Elegance Jewels Collection</div>
+        <div class="g-client">Elegance Jewels · Vadodara</div>
+        <div class="g-bottom">
+          <div class="g-stats"><span class="g-stat"><strong>80+</strong> Shots</span><span class="g-stat"><strong>Studio</strong></span></div>
+          <div class="g-cta">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g-item" data-category="event" data-index="3" onclick="openLightbox(3)" onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <div class="g-img">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=700&q=80" alt="">
+        <div class="g-img-overlay"></div>
+        <div class="g-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="g-tags"><span class="g-tag">Corporate</span></div>
+      </div>
+      <div class="g-info">
+        <div class="g-info-top"><span class="g-cat">Corporate Event</span><span class="g-year">2024</span></div>
+        <div class="g-title">NovaTech Annual Summit</div>
+        <div class="g-client">NovaTech India · Baroda</div>
+        <div class="g-bottom">
+          <div class="g-stats"><span class="g-stat"><strong>500+</strong> Attendees</span><span class="g-stat"><strong>8hr</strong> Coverage</span></div>
+          <div class="g-cta">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g-item" data-category="brand" data-index="4" onclick="openLightbox(4)" onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <div class="g-img">
+        <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=700&q=80" alt="">
+        <div class="g-img-overlay"></div>
+        <div class="g-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="g-tags"><span class="g-tag">Brand</span></div>
+      </div>
+      <div class="g-info">
+        <div class="g-info-top"><span class="g-cat">Brand Campaign</span><span class="g-year">2023</span></div>
+        <div class="g-title">Artisan Chai Co. Identity</div>
+        <div class="g-client">Artisan Chai Co. · Vadodara</div>
+        <div class="g-bottom">
+          <div class="g-stats"><span class="g-stat"><strong>Full</strong> Campaign</span><span class="g-stat"><strong>3</strong> Formats</span></div>
+          <div class="g-cta">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g-item" data-category="video" data-index="6" onclick="openLightbox(6)" onmouseenter="setCursorView(true)" onmouseleave="setCursorView(false)">
+      <div class="g-img">
+        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=700&q=80" alt="">
+        <div class="g-img-overlay"></div>
+        <div class="g-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="g-tags"><span class="g-tag">Documentary</span></div>
+      </div>
+      <div class="g-info">
+        <div class="g-info-top"><span class="g-cat">Documentary</span><span class="g-year">2023</span></div>
+        <div class="g-title">Vadodara Heritage Reel</div>
+        <div class="g-client">Vadodara Heritage Trust</div>
+        <div class="g-bottom">
+          <div class="g-stats"><span class="g-stat"><strong>Drone</strong> + Ground</span><span class="g-stat"><strong>8</strong> min</span></div>
+          <div class="g-cta">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><span class="stat-val" data-target="300">0</span><span class="stat-lbl">Projects Delivered</span></div>
+    <div class="stat-item"><span class="stat-val" data-target="50">0</span><span class="stat-lbl">Brand Campaigns</span></div>
+    <div class="stat-item"><span class="stat-val" data-target="120">0</span><span class="stat-lbl">Weddings Filmed</span></div>
+    <div class="stat-item"><span class="stat-val" data-target="5">0</span><span class="stat-lbl">Years Excellence</span></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-inner reveal">
+    <span class="section-label">Your Story Awaits</span>
+    <h2>Let's Create Your<br><em>Next Masterpiece</em></h2>
+    <p>Every frame in our portfolio was once just an idea in someone's mind. Let's turn yours into something extraordinary.</p>
+    <div class="cta-btns">
+      <a href="mailto:hello@vcreation.in" class="cta-primary"><span>Start a Project</span></a>
+      <a href="#" class="cta-secondary">Our Services</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Vcreation</a>
+  <span class="footer-copy">© 2025 Vcreation. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Instagram</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <div class="lb-inner" id="lbInner">
+    <div class="lb-img-wrap">
+      <img id="lbImg" src="" alt="">
+      <div class="lb-img-overlay"></div>
+      <div class="lb-nav">
+        <button class="lb-arrow" onclick="lbNavigate(-1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <button class="lb-arrow" onclick="lbNavigate(1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="lb-info">
+      <button class="lb-close" onclick="closeLightbox()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div>
+        <div class="lb-cat" id="lbCat">Category</div>
+        <div class="lb-title" id="lbTitle">Project Title</div>
+        <div class="lb-client" id="lbClient">Client Name</div>
+        <div class="lb-divider"></div>
+        <p class="lb-desc" id="lbDesc">Project description goes here.</p>
+        <div class="lb-details" id="lbDetails"></div>
+        <div class="lb-tags" id="lbTags"></div>
+      </div>
+      <div class="lb-actions">
+        <a href="#contact" class="lb-btn-primary" onclick="closeLightbox()">Start Similar Project</a>
+        <button class="lb-btn-sec" onclick="closeLightbox()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── DATA ── */
+const projects = [
+  {
+    cat: 'Brand Film', title: 'Luxe Interiors — A Vision in Space',
+    client: 'Luxe Interiors Pvt. Ltd., Vadodara',
+    desc: 'A full-length brand film capturing the philosophy and craftsmanship behind Vadodara\'s premier interior design studio. Shot over two days using cinema-grade cameras, we composed every frame to echo the client\'s obsession with light and space.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Duration', v: '3 min 20 sec' }, { l: 'Format', v: '4K Cinematic' }, { l: 'Crew', v: '6 People' }],
+    tags: ['Brand Film', '4K', 'Colour Grade', 'Motion FX'],
+    img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1000&q=80'
+  },
+  {
+    cat: 'Wedding Film', title: 'Shreya & Karan — A Golden Day',
+    client: 'Private Client · Vadodara',
+    desc: 'An intimate, cinematic wedding film spanning two days of celebrations — from the mehendi ceremony to the grand reception. Every moment was captured with sensitivity and craft, resulting in a film the couple will treasure forever.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Duration', v: '12 min Film' }, { l: 'Shoot', v: '2 Day Coverage' }, { l: 'Format', v: '6K RAW' }],
+    tags: ['Wedding', 'Cinematic', 'Drone', 'Multi-Cam'],
+    img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1000&q=80'
+  },
+  {
+    cat: 'Product Photography', title: 'Elegance Jewels — Festive Collection',
+    client: 'Elegance Jewels · Vadodara',
+    desc: 'An 80-frame product shoot for the festive season collection. Shot in our studio with precision macro lenses and custom lighting rigs that brought out the sparkle and craftsmanship in every piece. Delivered for both print and digital use.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Frames', v: '80+ Photos' }, { l: 'Setting', v: 'Studio' }, { l: 'Use', v: 'Print + Digital' }],
+    tags: ['Product', 'Studio', 'Retouching', 'Editorial'],
+    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=80'
+  },
+  {
+    cat: 'Corporate Event', title: 'NovaTech Annual Summit 2024',
+    client: 'NovaTech India · Baroda',
+    desc: 'Full-day coverage of NovaTech\'s annual summit with 500+ attendees. Four-camera setup, live streaming coordination, and same-day highlights reel delivered to the client within 3 hours of event close. A logistical and creative success.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Duration', v: '8hr Event' }, { l: 'Cameras', v: '4 Camera Setup' }, { l: 'Extras', v: 'Live Stream' }],
+    tags: ['Event', 'Corporate', 'Live Stream', 'Multi-Cam'],
+    img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1000&q=80'
+  },
+  {
+    cat: 'Brand Campaign', title: 'Artisan Chai Co. — Brand Identity',
+    client: 'Artisan Chai Co. · Vadodara',
+    desc: 'Complete brand identity campaign including lifestyle photography, a short video, and social media content. The visual language drew from the warmth of Indian tea culture with a contemporary, premium aesthetic — perfectly capturing the brand\'s soul.',
+    details: [{ l: 'Year', v: '2023' }, { l: 'Deliverables', v: 'Photo + Video' }, { l: 'Platform', v: 'Social + Print' }, { l: 'Team', v: '4 People' }],
+    tags: ['Brand', 'Campaign', 'Lifestyle', 'Social Media'],
+    img: 'https://images.unsplash.com/photo-1493612276216-ee3925520721?w=1000&q=80'
+  },
+  {
+    cat: 'Wedding Photography', title: 'Ananya & Rohan — Forever',
+    client: 'Private Client · Ahmedabad',
+    desc: 'A destination wedding shoot in Ahmedabad spanning three days. From pre-wedding portraits to the final farewell, every image was composed with the intention of telling a cohesive love story — raw, elegant, and deeply personal.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Duration', v: '3 Day Coverage' }, { l: 'Deliverables', v: '600+ Photos' }, { l: 'Location', v: 'Ahmedabad' }],
+    tags: ['Wedding', 'Photography', 'Portrait', 'Destination'],
+    img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&q=80'
+  },
+  {
+    cat: 'Documentary Film', title: 'Vadodara Heritage Reel',
+    client: 'Vadodara Heritage Trust',
+    desc: 'An 8-minute cinematic documentary celebrating the architectural and cultural heritage of Vadodara. Combining drone aerials, ground-level cinematography, and time-lapse sequences, this film has since been screened at multiple cultural events across Gujarat.',
+    details: [{ l: 'Year', v: '2023' }, { l: 'Duration', v: '8 min Film' }, { l: 'Format', v: 'Drone + Ground' }, { l: 'Screened', v: '12 Events' }],
+    tags: ['Documentary', 'Drone', 'Heritage', 'Time-Lapse'],
+    img: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1000&q=80'
+  },
+  {
+    cat: 'Aerial Photography', title: 'Skyline Builders — Vista Series',
+    client: 'Skyline Builders · Vadodara',
+    desc: 'A series of aerial drone photographs documenting Skyline Builders\' flagship residential complex at the golden hour. Used for the project\'s marketing collateral, the images dramatically elevated the perception of the development.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Type', v: 'Drone Aerial' }, { l: 'Time', v: 'Golden Hour' }, { l: 'Use', v: 'Marketing' }],
+    tags: ['Drone', 'Aerial', 'Architecture', 'Real Estate'],
+    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1000&q=80'
+  },
+  {
+    cat: 'Commercial Video', title: 'Raza Foods — Pure Freshness',
+    client: 'Raza Foods · Vadodara',
+    desc: 'A product-forward commercial celebrating the natural ingredients and artisan process behind Raza Foods\' range. The ad ran across Instagram and YouTube, driving a 3× increase in engagement compared to the client\'s previous content.',
+    details: [{ l: 'Year', v: '2023' }, { l: 'Duration', v: '90 sec Ad' }, { l: 'Platform', v: 'YouTube + Insta' }, { l: 'Result', v: '3× Engagement' }],
+    tags: ['Commercial', 'Product', 'Social Ad', '4K'],
+    img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1000&q=80'
+  },
+  {
+    cat: 'Cultural Event', title: 'Navratri 2024 — The Grand Stage',
+    client: 'Vadodara Cultural Committee',
+    desc: 'Official photography and videography for Vadodara\'s Navratri 2024 celebrations. Capturing the colours, energy, and emotion of one of India\'s most spectacular festivals across multiple venues over nine nights.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Duration', v: '9 Night Coverage' }, { l: 'Venues', v: '4 Locations' }, { l: 'Team', v: '6 Photographers' }],
+    tags: ['Event', 'Cultural', 'Festival', 'Night Photography'],
+    img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1000&q=80'
+  },
+  {
+    cat: 'Wedding Details', title: 'Mehndi Moments — Priya',
+    client: 'Private Client · Vadodara',
+    desc: 'An intimate, close-up mehndi shoot celebrating the art and emotion of pre-wedding rituals. Shot with macro lenses and soft natural light, these images capture the intricate patterns and joyful atmosphere of one of weddings\' most personal ceremonies.',
+    details: [{ l: 'Year', v: '2024' }, { l: 'Type', v: 'Wedding Detail' }, { l: 'Lenses', v: 'Macro + 50mm' }, { l: 'Light', v: 'Natural' }],
+    tags: ['Wedding', 'Mehndi', 'Macro', 'Portrait'],
+    img: 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1000&q=80'
+  }
+];
+
+let currentLbIndex = 0;
+
+/* ── Custom Cursor ── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+})();
+
+function setCursorView(on) {
+  cursor.classList.toggle('cursor-view', on);
+}
+
+/* ── View Toggle ── */
+function setView(mode) {
+  const mg = document.getElementById('masonryGrid');
+  const sg = document.getElementById('standardGrid');
+  const mb = document.getElementById('masonryBtn');
+  const gb = document.getElementById('gridBtn');
+  if (mode === 'masonry') {
+    mg.classList.remove('hidden'); sg.classList.add('hidden');
+    mb.classList.add('active'); gb.classList.remove('active');
+  } else {
+    sg.classList.remove('hidden'); mg.classList.add('hidden');
+    gb.classList.add('active'); mb.classList.remove('active');
+    // trigger reveal for grid items
+    setTimeout(() => {
+      document.querySelectorAll('.g-item').forEach(el => io.observe(el));
+    }, 50);
+  }
+}
+
+/* ── Filter ── */
+function filterPortfolio(cat, btn) {
+  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const all = document.querySelectorAll('[data-category]');
+  let visible = 0;
+  all.forEach(item => {
+    const show = cat === 'all' || item.dataset.category === cat;
+    item.style.opacity = show ? '1' : '0.12';
+    item.style.transform = show ? 'scale(1)' : 'scale(0.97)';
+    item.style.transition = 'opacity 0.45s, transform 0.45s';
+    item.style.pointerEvents = show ? 'auto' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('countLabel').textContent = visible + ' Projects';
+}
+
+/* ── Lightbox ── */
+function openLightbox(index) {
+  currentLbIndex = index;
+  renderLightbox(index);
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLightbox(index) {
+  const p = projects[index];
+  if (!p) return;
+  document.getElementById('lbImg').src = p.img;
+  document.getElementById('lbCat').textContent = p.cat;
+  document.getElementById('lbTitle').textContent = p.title;
+  document.getElementById('lbClient').textContent = p.client;
+  document.getElementById('lbDesc').textContent = p.desc;
+  document.getElementById('lbDetails').innerHTML = p.details.map(d =>
+    `<div class="lb-detail-item"><div class="lb-detail-label">${d.l}</div><div class="lb-detail-val">${d.v}</div></div>`
+  ).join('');
+  document.getElementById('lbTags').innerHTML = p.tags.map(t =>
+    `<span class="lb-tag">${t}</span>`
+  ).join('');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeLightboxOutside(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+function lbNavigate(dir) {
+  currentLbIndex = (currentLbIndex + dir + projects.length) % projects.length;
+  renderLightbox(currentLbIndex);
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lbNavigate(-1);
+  if (e.key === 'ArrowRight') lbNavigate(1);
+});
+
+/* ── Intersection Observer ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .feat-item, .g-item, .stat-item').forEach(el => io.observe(el));
+
+/* ── Counter Animation ── */
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.counted) {
+      e.target.dataset.counted = true;
+      const target = +e.target.dataset.target;
+      let start = 0; const step = target / 55;
+      const tick = () => {
+        start = Math.min(start + step, target);
+        e.target.textContent = Math.floor(start) + (start >= target ? '+' : '');
+        if (start < target) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-val[data-target]').forEach(el => counterObs.observe(el));
+
+/* ── Nav scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').style.background =
+    window.scrollY > 60 ? 'rgba(5,5,5,0.97)' : 'rgba(5,5,5,0.88)';
+});
+</script>
+</body>
+</html>
