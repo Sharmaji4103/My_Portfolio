@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Vcreation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #c9a84c;
+    --orange: #e85d1a;
+    --dark: #0a0a0a;
+    --darker: #050505;
+    --light: #f5f0e8;
+    --accent: #e8d5a3;
+    --form-bg: #080707;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--darker);
+    color: var(--light);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed; z-index: 9999; pointer-events: none;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s, border-radius 0.3s;
+  }
+  .cursor-ring {
+    position: fixed; z-index: 9998; pointer-events: none;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.35s ease, height 0.35s ease, border-color 0.3s;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring,
+  body:has(input:hover) .cursor-ring,
+  body:has(textarea:hover) .cursor-ring,
+  body:has(select:hover) .cursor-ring {
+    width: 52px; height: 52px; border-color: rgba(201,168,76,0.7);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(5,5,5,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    transition: background 0.4s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--gold); letter-spacing: 2px; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--accent); text-decoration: none; font-size: 0.85rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-cta {
+    background: var(--gold); border: 1px solid var(--gold); color: var(--darker);
+    padding: 0.6rem 1.6rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.8rem;
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    cursor: none; transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .nav-cta:hover { background: transparent; color: var(--gold); }
+
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.25), transparent);
+  }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    position: relative; min-height: 55vh;
+    display: flex; align-items: flex-end;
+    overflow: hidden; padding: 0 4rem 5rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 70% at 85% 40%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 5% 70%, rgba(232,93,26,0.05) 0%, transparent 60%),
+      linear-gradient(175deg, #060509 0%, #050505 55%, #070605 100%);
+  }
+  /* grid overlay */
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.028) 1px, transparent 1px);
+    background-size: 90px 90px;
+    mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.6) 100%);
+  }
+  /* large ghost text */
+  .hero-bg::after {
+    content: 'HELLO';
+    position: absolute; right: -1rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 22vw;
+    font-weight: 900; line-height: 1;
+    color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.04);
+    user-select: none; pointer-events: none; white-space: nowrap;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 800px; padding-top: 9rem;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .hero-breadcrumb {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 0.65rem; letter-spacing: 6px; text-transform: uppercase;
+    color: rgba(201,168,76,0.55); margin-bottom: 1.8rem;
+  }
+  .hero-breadcrumb::before {
+    content: ''; display: block; width: 36px; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.5));
+  }
+  .hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem); font-weight: 900;
+    line-height: 0.93; letter-spacing: -2px; margin-bottom: 2rem;
+  }
+  .hero-content h1 .w1 {
+    display: block; color: var(--light);
+    opacity: 0; transform: translateY(30px);
+    animation: riseUp 0.9s 0.1s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-content h1 .w2 {
+    display: block; color: var(--gold); font-style: italic;
+    opacity: 0; transform: translateY(30px);
+    animation: riseUp 0.9s 0.25s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero-content h1 .w3 {
+    display: block; color: transparent;
+    -webkit-text-stroke: 1.5px rgba(201,168,76,0.4);
+    opacity: 0; transform: translateY(30px);
+    animation: riseUp 0.9s 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes riseUp { to { opacity: 1; transform: translateY(0); } }
+
+  .hero-sub {
+    font-size: 0.95rem; line-height: 1.85; color: rgba(245,240,232,0.45);
+    font-weight: 300; max-width: 520px;
+    opacity: 0; animation: riseUp 0.9s 0.55s forwards;
+  }
+
+  /* floating availability pill */
+  .avail-pill {
+    position: absolute; right: 4rem; bottom: 5rem; z-index: 2;
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(201,168,76,0.25);
+    background: rgba(8,7,7,0.8); backdrop-filter: blur(12px);
+    padding: 0.8rem 1.4rem;
+    opacity: 0; animation: riseUp 0.9s 0.7s forwards;
+  }
+  .avail-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #4caf50;
+    box-shadow: 0 0 8px rgba(76,175,80,0.8);
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 8px rgba(76,175,80,0.8); }
+    50% { box-shadow: 0 0 18px rgba(76,175,80,0.5); }
+  }
+  .avail-text {
+    font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,240,232,0.55);
+  }
+  .avail-text strong { color: #4caf50; }
+
+  /* ── MAIN CONTACT LAYOUT ── */
+  .contact-layout {
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    max-width: 1400px; margin: 0 auto;
+    padding: 7rem 4rem 9rem; gap: 6rem;
+    position: relative;
+  }
+
+  /* ── LEFT PANEL ── */
+  .contact-left { position: sticky; top: 120px; align-self: start; }
+
+  .contact-left .section-label {
+    font-size: 0.65rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1.2rem;
+  }
+  .contact-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 900;
+    color: var(--light); line-height: 1.1; margin-bottom: 1.5rem;
+  }
+  .contact-left h2 em { font-style: italic; color: var(--gold); }
+  .contact-left p {
+    font-size: 0.9rem; line-height: 1.9;
+    color: rgba(245,240,232,0.45); font-weight: 300; margin-bottom: 3rem;
+  }
+
+  /* contact info items */
+  .contact-items { margin-bottom: 3rem; }
+  .ci-item {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    transition: background 0.3s;
+    cursor: none;
+  }
+  .ci-item:first-child { border-top: 1px solid rgba(201,168,76,0.08); }
+  .ci-item:hover { background: rgba(201,168,76,0.02); padding-left: 0.5rem; transition: padding 0.3s, background 0.3s; }
+
+  .ci-icon {
+    width: 42px; height: 42px; border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--gold);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .ci-item:hover .ci-icon { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+
+  .ci-label {
+    font-size: 0.58rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(201,168,76,0.45); margin-bottom: 0.3rem;
+  }
+  .ci-value {
+    font-size: 0.92rem; color: var(--light); font-weight: 400;
+  }
+  .ci-sub {
+    font-size: 0.73rem; color: rgba(245,240,232,0.3);
+    font-weight: 300; margin-top: 1px;
+  }
+
+  /* social links */
+  .social-row {
+    display: flex; gap: 0.75rem;
+  }
+  .soc-btn {
+    width: 42px; height: 42px; border: 1px solid rgba(201,168,76,0.18);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(201,168,76,0.5); font-size: 0.7rem; font-weight: 700;
+    text-decoration: none; cursor: none;
+    transition: all 0.3s; font-family: 'Raleway', sans-serif;
+  }
+  .soc-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.07); }
+
+  /* response time badge */
+  .response-badge {
+    margin-top: 2.5rem; padding: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.15);
+    background: rgba(201,168,76,0.03);
+    display: flex; align-items: center; gap: 1.2rem;
+  }
+  .rb-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); flex-shrink: 0;
+  }
+  .rb-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900; color: var(--gold); line-height: 1;
+  }
+  .rb-label {
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,240,232,0.35); margin-top: 2px;
+  }
+
+  /* ── RIGHT PANEL — FORM ── */
+  .contact-form-wrap {
+    position: relative;
+  }
+
+  /* step indicator */
+  .form-steps {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 3rem;
+  }
+  .fstep {
+    display: flex; align-items: center; gap: 0.7rem;
+    padding: 0.6rem 0; cursor: none;
+    transition: opacity 0.3s;
+  }
+  .fstep:not(:last-child)::after {
+    content: ''; display: block; width: 3rem; height: 1px;
+    background: rgba(201,168,76,0.15); margin: 0 0.5rem;
+    transition: background 0.4s;
+  }
+  .fstep.completed:not(:last-child)::after { background: rgba(201,168,76,0.45); }
+  .fstep-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; color: rgba(201,168,76,0.3); font-weight: 700;
+    transition: all 0.4s;
+  }
+  .fstep.active .fstep-dot { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.1); }
+  .fstep.completed .fstep-dot { border-color: var(--gold); background: var(--gold); color: var(--darker); }
+  .fstep-label {
+    font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,240,232,0.25); transition: color 0.3s;
+  }
+  .fstep.active .fstep-label { color: rgba(245,240,232,0.65); }
+  .fstep.completed .fstep-label { color: rgba(201,168,76,0.55); }
+
+  /* form panel container */
+  .form-panel-wrap { position: relative; min-height: 500px; }
+  .form-panel {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transform: translateX(30px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .form-panel.active {
+    position: relative; inset: auto;
+    opacity: 1; pointer-events: all; transform: translateX(0);
+  }
+  .form-panel.exit {
+    position: absolute;
+    opacity: 0; transform: translateX(-30px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .form-panel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--light);
+    margin-bottom: 0.5rem; line-height: 1.2;
+  }
+  .form-panel-title em { font-style: italic; color: var(--gold); }
+  .form-panel-sub {
+    font-size: 0.82rem; color: rgba(245,240,232,0.38);
+    font-weight: 300; margin-bottom: 2.5rem; line-height: 1.7;
+  }
+
+  /* ── PROJECT TYPE CARDS ── */
+  .type-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;
+    margin-bottom: 2.5rem;
+  }
+  .type-card {
+    border: 1px solid rgba(201,168,76,0.14);
+    padding: 1.5rem 1.2rem; text-align: center;
+    cursor: none; position: relative; overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .type-card::before {
+    content: ''; position: absolute; inset: 0; background: rgba(201,168,76,0.05);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .type-card:hover { border-color: rgba(201,168,76,0.35); }
+  .type-card:hover::before { opacity: 1; }
+  .type-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .type-card.selected::after {
+    content: '✓'; position: absolute; top: 0.5rem; right: 0.7rem;
+    font-size: 0.65rem; color: var(--gold);
+  }
+  .type-icon { font-size: 1.5rem; margin-bottom: 0.7rem; display: block; }
+  .type-name {
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.6); font-weight: 600;
+  }
+  .type-card.selected .type-name { color: var(--gold); }
+
+  /* ── FORM FIELDS ── */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field-row.full { grid-template-columns: 1fr; }
+
+  .field-group {
+    margin-bottom: 1.4rem; position: relative;
+  }
+  .field-label {
+    font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(201,168,76,0.45); display: block; margin-bottom: 0.6rem;
+    transition: color 0.3s;
+  }
+  .field-group:focus-within .field-label { color: rgba(201,168,76,0.8); }
+
+  .field-input {
+    width: 100%; background: var(--form-bg);
+    border: 1px solid rgba(201,168,76,0.12);
+    color: var(--light); padding: 1rem 1.2rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.9rem; font-weight: 300;
+    cursor: none; outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    appearance: none; -webkit-appearance: none;
+  }
+  .field-input:focus {
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.06);
+    background: rgba(201,168,76,0.03);
+  }
+  .field-input::placeholder { color: rgba(245,240,232,0.18); }
+  textarea.field-input { resize: none; min-height: 130px; line-height: 1.7; }
+  select.field-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 1.2rem center;
+    padding-right: 3rem; cursor: none;
+  }
+  select.field-input option { background: #0a0908; color: var(--light); }
+
+  /* field line animation */
+  .field-line {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1px; overflow: hidden;
+  }
+  .field-line::after {
+    content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 1px;
+    background: var(--gold);
+    transition: left 0.4s ease;
+  }
+  .field-group:focus-within .field-line::after { left: 0; }
+
+  /* budget range slider */
+  .budget-slider-wrap { margin-bottom: 2rem; }
+  .budget-display {
+    display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1rem;
+  }
+  .budget-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 900; color: var(--gold); line-height: 1;
+  }
+  .budget-unit {
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+  }
+  .budget-slider {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 2px; background: rgba(201,168,76,0.15);
+    outline: none; cursor: none;
+  }
+  .budget-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--darker);
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+    cursor: none;
+  }
+  .budget-slider::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--darker);
+    cursor: none;
+  }
+  .budget-marks {
+    display: flex; justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  .budget-mark {
+    font-size: 0.58rem; letter-spacing: 1px;
+    color: rgba(245,240,232,0.2);
+  }
+
+  /* timeline options */
+  .timeline-opts {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+  .tl-opt {
+    border: 1px solid rgba(201,168,76,0.13);
+    padding: 0.9rem 0.5rem; text-align: center;
+    cursor: none; transition: all 0.3s;
+  }
+  .tl-opt:hover { border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.03); }
+  .tl-opt.selected { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .tl-opt-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--light); display: block; line-height: 1;
+  }
+  .tl-opt.selected .tl-opt-val { color: var(--gold); }
+  .tl-opt-label { font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.28); margin-top: 3px; display: block; }
+
+  /* how did you hear checkboxes */
+  .source-grid {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+  }
+  .source-chip {
+    border: 1px solid rgba(201,168,76,0.13);
+    padding: 0.5rem 1.1rem; cursor: none;
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.38); font-weight: 600;
+    transition: all 0.3s;
+  }
+  .source-chip:hover { border-color: rgba(201,168,76,0.4); color: var(--accent); }
+  .source-chip.selected { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
+
+  /* nav buttons */
+  .form-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 2.5rem; padding-top: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .btn-back {
+    background: transparent; border: 1px solid rgba(201,168,76,0.2);
+    color: rgba(201,168,76,0.5); padding: 0.9rem 2rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    cursor: none; transition: all 0.3s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-back:hover { border-color: rgba(201,168,76,0.5); color: rgba(201,168,76,0.8); }
+  .btn-next {
+    background: var(--gold); color: var(--darker);
+    border: none; padding: 1rem 2.5rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.78rem;
+    font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    cursor: none; transition: all 0.4s; position: relative; overflow: hidden;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-next::before {
+    content: ''; position: absolute; inset: 0; background: var(--orange);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s; z-index: 0;
+  }
+  .btn-next span, .btn-next svg { position: relative; z-index: 1; }
+  .btn-next:hover::before { transform: scaleX(1); }
+  .btn-next:hover { color: #fff; }
+
+  /* progress bar */
+  .form-progress {
+    height: 2px; background: rgba(201,168,76,0.1);
+    margin-bottom: 3rem; position: relative; overflow: hidden;
+  }
+  .form-progress-fill {
+    height: 100%; background: var(--gold);
+    transition: width 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* ── SUCCESS STATE ── */
+  .success-panel {
+    display: none; text-align: center; padding: 4rem 2rem;
+  }
+  .success-panel.show { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+  .success-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 1px solid var(--gold); background: rgba(201,168,76,0.08);
+    display: flex; align-items: center; justify-content: center;
+    animation: successPop 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes successPop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--light);
+  }
+  .success-title em { font-style: italic; color: var(--gold); }
+  .success-text {
+    font-size: 0.9rem; line-height: 1.85; color: rgba(245,240,232,0.45);
+    font-weight: 300; max-width: 420px;
+  }
+  .success-ref {
+    font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(201,168,76,0.45); border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.5rem 1.2rem;
+  }
+
+  /* ── VISIT SECTION ── */
+  .visit-section {
+    width: 100%;
+    background: linear-gradient(180deg, #050505 0%, #07060a 60%, #050505 100%);
+    padding: 8rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .visit-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .visit-inner {
+    max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .visit-left .section-label {
+    font-size: 0.65rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1.2rem;
+  }
+  .visit-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+    color: var(--light); margin-bottom: 1.5rem; line-height: 1.1;
+  }
+  .visit-left h2 em { font-style: italic; color: var(--gold); }
+  .visit-left p {
+    font-size: 0.88rem; line-height: 1.9; color: rgba(245,240,232,0.45);
+    font-weight: 300; margin-bottom: 2.5rem;
+  }
+  .visit-hours {
+    border: 1px solid rgba(201,168,76,0.12); overflow: hidden;
+  }
+  .vh-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    transition: background 0.3s;
+  }
+  .vh-row:last-child { border-bottom: none; }
+  .vh-row:hover { background: rgba(201,168,76,0.03); }
+  .vh-day { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .vh-time { font-size: 0.82rem; color: var(--light); font-weight: 400; }
+  .vh-time.closed { color: rgba(245,240,232,0.2); font-style: italic; }
+  .vh-row.today { background: rgba(201,168,76,0.04); }
+  .vh-row.today .vh-day { color: var(--gold); }
+
+  /* map mock */
+  .visit-map {
+    position: relative; aspect-ratio: 1;
+    border: 1px solid rgba(201,168,76,0.15);
+    overflow: hidden;
+    opacity: 0; transform: translateX(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .visit-map.visible { opacity: 1; transform: translateX(0); }
+
+  .map-bg {
+    width: 100%; height: 100%;
+    background: #0a090d;
+    position: relative;
+  }
+  /* SVG grid map */
+  .map-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.06) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  /* roads */
+  .map-road-h {
+    position: absolute; left: 0; right: 0; height: 8px;
+    background: rgba(201,168,76,0.12);
+  }
+  .map-road-v {
+    position: absolute; top: 0; bottom: 0; width: 8px;
+    background: rgba(201,168,76,0.12);
+  }
+  .map-pin {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+    z-index: 2;
+  }
+  .pin-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 6px rgba(201,168,76,0.2), 0 0 0 12px rgba(201,168,76,0.08);
+    animation: pinPulse 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pinPulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(201,168,76,0.2), 0 0 0 12px rgba(201,168,76,0.08); }
+    50% { box-shadow: 0 0 0 10px rgba(201,168,76,0.15), 0 0 0 22px rgba(201,168,76,0.05); }
+  }
+  .pin-line { width: 2px; height: 20px; background: var(--gold); opacity: 0.7; }
+  .map-label {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, 28px);
+    background: rgba(8,7,7,0.9); backdrop-filter: blur(10px);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.6rem 1rem; white-space: nowrap;
+  }
+  .map-label-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem; font-weight: 700; color: var(--light);
+  }
+  .map-label-addr { font-size: 0.6rem; color: rgba(245,240,232,0.4); margin-top: 2px; }
+
+  /* map overlay blocks (fake buildings) */
+  .map-block {
+    position: absolute;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.07);
+  }
+
+  .map-directions {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    display: flex; gap: 0.7rem;
+  }
+  .map-dir-btn {
+    background: rgba(8,7,7,0.9); backdrop-filter: blur(10px);
+    border: 1px solid rgba(201,168,76,0.25); color: var(--gold);
+    padding: 0.55rem 1.1rem;
+    font-family: 'Raleway', sans-serif; font-size: 0.62rem;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    cursor: none; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .map-dir-btn:hover { background: var(--gold); color: var(--darker); }
+
+  /* ── FAQ ── */
+  .faq-section {
+    padding: 8rem 4rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .faq-header { text-align: center; margin-bottom: 4.5rem; }
+  .faq-header .section-label {
+    font-size: 0.65rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1rem;
+  }
+  .faq-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; color: var(--light);
+  }
+  .faq-header h2 em { font-style: italic; color: var(--gold); }
+
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .faq-item {
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    border-right: 1px solid rgba(201,168,76,0.06);
+    overflow: hidden; transition: background 0.3s;
+  }
+  .faq-item:nth-child(even) { border-right: none; }
+  .faq-item:hover { background: rgba(201,168,76,0.02); }
+
+  .faq-q {
+    width: 100%; background: transparent; border: none; text-align: left;
+    padding: 1.8rem 2rem; cursor: none;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  }
+  .faq-q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--light); line-height: 1.3;
+  }
+  .faq-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.25); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 1rem; font-weight: 300;
+    transition: transform 0.4s, background 0.3s, border-color 0.3s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(201,168,76,0.1); border-color: var(--gold); }
+
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s;
+    padding: 0 2rem;
+  }
+  .faq-a-inner {
+    font-size: 0.85rem; line-height: 1.85;
+    color: rgba(245,240,232,0.42); font-weight: 300;
+    padding-bottom: 1.8rem;
+  }
+  .faq-item.open .faq-a { max-height: 200px; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 900;
+    color: var(--gold); letter-spacing: 2px; text-decoration: none;
+  }
+  .footer-copy { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.25); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.3); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .contact-layout { grid-template-columns: 1fr; gap: 4rem; }
+    .contact-left { position: relative; top: auto; }
+    .visit-inner { grid-template-columns: 1fr; gap: 4rem; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .faq-item { border-right: none; }
+    .type-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline-opts { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 0 1.5rem 4rem; }
+    .avail-pill { display: none; }
+    .contact-layout { padding: 4rem 1.5rem 6rem; }
+    .visit-section, .faq-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .field-row { grid-template-columns: 1fr; }
+    .type-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline-opts { grid-template-columns: repeat(2, 1fr); }
+    .site-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Vcreation</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <a href="#form" class="nav-cta active">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-breadcrumb">Get In Touch</div>
+    <h1>
+      <span class="w1">Let's Start</span>
+      <span class="w2">Something</span>
+      <span class="w3">Extraordinary</span>
+    </h1>
+    <p class="hero-sub">Every great project begins with a conversation. Tell us your vision — we'll tell you how we can make it unforgettable. We respond to every enquiry within 2 hours.</p>
+  </div>
+  <div class="avail-pill">
+    <div class="avail-dot"></div>
+    <span class="avail-text">Currently <strong>Available</strong> for Projects</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT LAYOUT -->
+<div class="contact-layout" id="form">
+
+  <!-- LEFT -->
+  <div class="contact-left reveal">
+    <span class="section-label">Reach Out</span>
+    <h2>We'd Love to<br>Hear Your <em>Story</em></h2>
+    <p>Whether it's a wedding, a brand campaign, or a creative vision that doesn't fit any category — bring it to us. No project is too big or too intimate.</p>
+
+    <div class="contact-items">
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ci-label">Phone</div>
+          <div class="ci-value">+91 98765 43210</div>
+          <div class="ci-sub">Mon–Sat, 10am – 7pm</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value">hello@vcreation.in</div>
+          <div class="ci-sub">Reply within 2 hours</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ci-label">Studio</div>
+          <div class="ci-value">Vcreation Studio, Vadodara</div>
+          <div class="ci-sub">Gujarat, India — 390015</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ci-label">WhatsApp</div>
+          <div class="ci-value">+91 98765 43210</div>
+          <div class="ci-sub">Quick chat welcome</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-row">
+      <a href="#" class="soc-btn">Ig</a>
+      <a href="#" class="soc-btn">Yt</a>
+      <a href="#" class="soc-btn">In</a>
+      <a href="#" class="soc-btn">Fb</a>
+      <a href="#" class="soc-btn">Wa</a>
+    </div>
+
+    <div class="response-badge">
+      <div class="rb-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div>
+        <div class="rb-num">2hrs</div>
+        <div class="rb-label">Average Response Time</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — MULTI-STEP FORM -->
+  <div class="contact-form-wrap reveal" style="transition-delay:0.15s">
+
+    <!-- Progress bar -->
+    <div class="form-progress">
+      <div class="form-progress-fill" id="progressFill" style="width:33%"></div>
+    </div>
+
+    <!-- Step indicators -->
+    <div class="form-steps">
+      <div class="fstep active" id="step-ind-1">
+        <div class="fstep-dot">01</div>
+        <span class="fstep-label">Your Project</span>
+      </div>
+      <div class="fstep" id="step-ind-2">
+        <div class="fstep-dot">02</div>
+        <span class="fstep-label">Your Details</span>
+      </div>
+      <div class="fstep" id="step-ind-3">
+        <div class="fstep-dot">03</div>
+        <span class="fstep-label">Final Notes</span>
+      </div>
+    </div>
+
+    <div class="form-panel-wrap">
+
+      <!-- ══ PANEL 1 ══ -->
+      <div class="form-panel active" id="panel1">
+        <div class="form-panel-title">What are you <em>creating?</em></div>
+        <p class="form-panel-sub">Select the type of project you have in mind. Not sure? Pick the closest one.</p>
+
+        <div class="type-grid" id="typeGrid">
+          <div class="type-card" onclick="selectType(this, 'Video Production')">
+            <span class="type-icon">🎬</span>
+            <span class="type-name">Video</span>
+          </div>
+          <div class="type-card" onclick="selectType(this, 'Photography')">
+            <span class="type-icon">📷</span>
+            <span class="type-name">Photography</span>
+          </div>
+          <div class="type-card" onclick="selectType(this, 'Wedding')">
+            <span class="type-icon">💍</span>
+            <span class="type-name">Wedding</span>
+          </div>
+          <div class="type-card" onclick="selectType(this, 'Brand Campaign')">
+            <span class="type-icon">✦</span>
+            <span class="type-name">Brand</span>
+          </div>
+          <div class="type-card" onclick="selectType(this, 'Event Coverage')">
+            <span class="type-icon">🎪</span>
+            <span class="type-name">Event</span>
+          </div>
+          <div class="type-card" onclick="selectType(this, 'Other / Not Sure')">
+            <span class="type-icon">◈</span>
+            <span class="type-name">Other</span>
+          </div>
+        </div>
+
+        <!-- Budget slider -->
+        <div class="budget-slider-wrap">
+          <label class="field-label">Estimated Budget</label>
+          <div class="budget-display">
+            <span class="budget-val" id="budgetVal">₹25K</span>
+            <span class="budget-unit">INR Approx.</span>
+          </div>
+          <input type="range" class="budget-slider" id="budgetSlider" min="1" max="10" value="3" oninput="updateBudget(this.value)">
+          <div class="budget-marks">
+            <span class="budget-mark">₹5K</span>
+            <span class="budget-mark">₹25K</span>
+            <span class="budget-mark">₹50K</span>
+            <span class="budget-mark">₹1L+</span>
+            <span class="budget-mark">Custom</span>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <label class="field-label">Project Timeline</label>
+        <div class="timeline-opts" id="timelineOpts">
+          <div class="tl-opt" onclick="selectTimeline(this)">
+            <span class="tl-opt-val">ASAP</span>
+            <span class="tl-opt-label">Rush</span>
+          </div>
+          <div class="tl-opt" onclick="selectTimeline(this)">
+            <span class="tl-opt-val">1–2</span>
+            <span class="tl-opt-label">Weeks</span>
+          </div>
+          <div class="tl-opt" onclick="selectTimeline(this)">
+            <span class="tl-opt-val">1–2</span>
+            <span class="tl-opt-label">Months</span>
+          </div>
+          <div class="tl-opt" onclick="selectTimeline(this)">
+            <span class="tl-opt-val">3M+</span>
+            <span class="tl-opt-label">Planning</span>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <div></div>
+          <button class="btn-next" onclick="goToStep(2)">
+            <span>Next Step</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ PANEL 2 ══ -->
+      <div class="form-panel" id="panel2">
+        <div class="form-panel-title">Tell us about <em>yourself</em></div>
+        <p class="form-panel-sub">We'd love to know who we're working with. These details help us prepare for our conversation.</p>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">First Name *</label>
+            <input type="text" class="field-input" placeholder="Vishal" id="firstName">
+            <div class="field-line"></div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Last Name *</label>
+            <input type="text" class="field-input" placeholder="Sharma" id="lastName">
+            <div class="field-line"></div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Email Address *</label>
+            <input type="email" class="field-input" placeholder="hello@yourbrand.com" id="email">
+            <div class="field-line"></div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Phone Number</label>
+            <input type="tel" class="field-input" placeholder="+91 98765 43210" id="phone">
+            <div class="field-line"></div>
+          </div>
+        </div>
+        <div class="field-row full">
+          <div class="field-group">
+            <label class="field-label">Company / Brand Name</label>
+            <input type="text" class="field-input" placeholder="Your company (if applicable)" id="company">
+            <div class="field-line"></div>
+          </div>
+        </div>
+        <div class="field-row full">
+          <div class="field-group">
+            <label class="field-label">Where is the project located?</label>
+            <select class="field-input" id="location">
+              <option value="" disabled selected>Select a city or region</option>
+              <option>Vadodara</option>
+              <option>Ahmedabad</option>
+              <option>Surat</option>
+              <option>Rajkot</option>
+              <option>Other Gujarat City</option>
+              <option>Outside Gujarat</option>
+              <option>Destination / International</option>
+            </select>
+            <div class="field-line"></div>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goToStep(1)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn-next" onclick="goToStep(3)">
+            <span>Next Step</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ PANEL 3 ══ -->
+      <div class="form-panel" id="panel3">
+        <div class="form-panel-title">Almost <em>there</em></div>
+        <p class="form-panel-sub">Share your vision with us in your own words. The more you tell us, the better we can prepare.</p>
+
+        <div class="field-row full">
+          <div class="field-group">
+            <label class="field-label">Tell Us About Your Project *</label>
+            <textarea class="field-input" placeholder="Describe your vision, what you're looking for, and any specific ideas or references you have in mind..." id="message"></textarea>
+            <div class="field-line"></div>
+          </div>
+        </div>
+
+        <div class="field-row full">
+          <div class="field-group">
+            <label class="field-label">Preferred Date / Event Date</label>
+            <input type="date" class="field-input" id="eventDate">
+            <div class="field-line"></div>
+          </div>
+        </div>
+
+        <label class="field-label" style="margin-bottom:0.8rem; display:block;">How did you hear about us?</label>
+        <div class="source-grid" id="sourceGrid">
+          <div class="source-chip" onclick="toggleSource(this)">Instagram</div>
+          <div class="source-chip" onclick="toggleSource(this)">YouTube</div>
+          <div class="source-chip" onclick="toggleSource(this)">Google</div>
+          <div class="source-chip" onclick="toggleSource(this)">Referral</div>
+          <div class="source-chip" onclick="toggleSource(this)">Wedding Vendor</div>
+          <div class="source-chip" onclick="toggleSource(this)">Event</div>
+          <div class="source-chip" onclick="toggleSource(this)">Friend</div>
+          <div class="source-chip" onclick="toggleSource(this)">Other</div>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goToStep(2)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn-next" onclick="submitForm()" style="background: var(--orange);">
+            <span>Send Message</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- end form-panel-wrap -->
+
+    <!-- SUCCESS STATE -->
+    <div class="success-panel" id="successPanel">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="success-title">Message <em>Sent!</em></div>
+      <p class="success-text">Thank you for reaching out. We've received your project details and will get back to you within 2 hours. We're excited to hear more about your vision.</p>
+      <div class="success-ref" id="successRef">REF: VC-2025-0000</div>
+    </div>
+
+  </div><!-- end contact-form-wrap -->
+</div><!-- end contact-layout -->
+
+<div class="divider"></div>
+
+<!-- VISIT SECTION -->
+<div class="visit-section">
+  <div class="visit-inner">
+    <div class="visit-left reveal">
+      <span class="section-label">Find Us</span>
+      <h2>Visit Our <em>Studio</em></h2>
+      <p>Our studio in the heart of Vadodara is where ideas come alive. Come in for a coffee and a conversation — walk-ins and pre-booked consultations both welcome.</p>
+
+      <div class="visit-hours">
+        <div class="vh-row">
+          <span class="vh-day">Monday – Friday</span>
+          <span class="vh-time">10:00 AM – 7:00 PM</span>
+        </div>
+        <div class="vh-row today">
+          <span class="vh-day">Saturday ★ Today</span>
+          <span class="vh-time">10:00 AM – 5:00 PM</span>
+        </div>
+        <div class="vh-row">
+          <span class="vh-day">Sunday</span>
+          <span class="vh-time closed">Closed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visit-map reveal" style="transition-delay:0.2s" id="visitMap">
+      <div class="map-bg">
+        <!-- fake roads -->
+        <div class="map-road-h" style="top:35%"></div>
+        <div class="map-road-h" style="top:62%"></div>
+        <div class="map-road-v" style="left:28%"></div>
+        <div class="map-road-v" style="left:60%"></div>
+        <!-- fake blocks -->
+        <div class="map-block" style="top:10%;left:10%;width:14%;height:20%"></div>
+        <div class="map-block" style="top:10%;left:35%;width:18%;height:15%"></div>
+        <div class="map-block" style="top:10%;left:68%;width:20%;height:18%"></div>
+        <div class="map-block" style="top:42%;left:10%;width:12%;height:14%"></div>
+        <div class="map-block" style="top:42%;left:35%;width:20%;height:12%"></div>
+        <div class="map-block" style="top:42%;left:68%;width:18%;height:16%"></div>
+        <div class="map-block" style="top:70%;left:10%;width:16%;height:18%"></div>
+        <div class="map-block" style="top:70%;left:68%;width:20%;height:18%"></div>
+        <!-- pin -->
+        <div class="map-pin">
+          <div class="pin-dot"></div>
+          <div class="pin-line"></div>
+          <div class="map-label">
+            <div class="map-label-name">Vcreation Studio</div>
+            <div class="map-label-addr">Vadodara, Gujarat</div>
+          </div>
+        </div>
+        <!-- direction buttons -->
+        <div class="map-directions">
+          <a href="https://maps.google.com" target="_blank" class="map-dir-btn">Get Directions</a>
+          <a href="https://maps.google.com" target="_blank" class="map-dir-btn">Open Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-header reveal">
+    <span class="section-label">Common Questions</span>
+    <h2>Before You <em>Write</em></h2>
+  </div>
+  <div class="faq-grid">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How far in advance should I book?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">For weddings, we recommend booking at least 3–6 months in advance as dates fill up fast. For corporate shoots and brand campaigns, 2–4 weeks is usually sufficient. Rush bookings are available subject to availability.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Do you travel outside Vadodara?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely. We regularly travel across Gujarat and India for shoots. For destination projects, travel and accommodation costs are added separately to the quote. We've worked across Mumbai, Rajasthan, Goa, and beyond.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What's included in the final delivery?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">All deliverables are discussed and agreed upon in your contract. Typically this includes colour-graded footage, edited video cuts, full-resolution retouched photographs, and a digital download link. Print files are available on request.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How do revisions work?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Our Signature and Premium packages include unlimited revisions. Essentials package includes 2 rounds. We work with you until you're fully satisfied — your happiness with the final product is non-negotiable for us.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Do you require a deposit to book?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Yes, we require a 30% deposit to confirm your booking and hold the date. The remainder is due one week before the shoot. We accept all major payment methods including UPI, bank transfer, and card.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How long does post-production take?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Turnaround times vary by project scope. Photo edits typically take 5–7 days. Videos take 1–3 weeks depending on length and complexity. Rush delivery is available for an additional fee. We always stick to agreed timelines.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Can I see behind-the-scenes during shoots?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Of course! We love including clients in the creative process. You're welcome on set and we'll walk you through the creative direction. Many clients find watching the shoot as exciting as seeing the final result.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What equipment do you use?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">We shoot on cinema-grade cameras (Sony FX series, Canon Cinema EOS) with a range of professional lenses. Our drone fleet includes DJI Mavic 3 Pro for aerials. Lighting setups vary from natural light to full studio configurations.</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <a href="#" class="footer-logo">Vcreation</a>
+  <span class="footer-copy">© 2025 Vcreation. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Instagram</a>
+  </div>
+</footer>
+
+<script>
+  /* ── Custom Cursor ── */
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  (function anim(){
+    rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+    cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+    ring.style.left   = rx+'px'; ring.style.top   = ry+'px';
+    requestAnimationFrame(anim);
+  })();
+
+  /* ── Scroll Reveal ── */
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* visit map */
+  const vmObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); vmObs.unobserve(e.target); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('.visit-map').forEach(el=>vmObs.observe(el));
+
+  /* ── Form state ── */
+  let selectedType = '';
+  let selectedTimeline = '';
+  let currentStep = 1;
+  const budgetLevels = ['₹5K','₹10K','₹25K','₹35K','₹50K','₹75K','₹1L','₹1.5L','₹2L','Custom'];
+
+  function updateBudget(v){
+    document.getElementById('budgetVal').textContent = budgetLevels[v-1] || '₹25K';
+    /* fill left of thumb */
+    const pct = ((v-1)/9)*100;
+    document.getElementById('budgetSlider').style.background =
+      `linear-gradient(to right, rgba(201,168,76,0.6) ${pct}%, rgba(201,168,76,0.12) ${pct}%)`;
+  }
+  updateBudget(3);
+
+  function selectType(el, type){
+    document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedType = type;
+  }
+
+  function selectTimeline(el){
+    document.querySelectorAll('.tl-opt').forEach(o=>o.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTimeline = el.querySelector('.tl-opt-val').textContent + ' ' + el.querySelector('.tl-opt-label').textContent;
+  }
+
+  function toggleSource(el){
+    el.classList.toggle('selected');
+  }
+
+  /* ── Step navigation ── */
+  function goToStep(step){
+    const panels = document.querySelectorAll('.form-panel');
+    const indicators = document.querySelectorAll('.fstep');
+    const progressFill = document.getElementById('progressFill');
+
+    // Exit current
+    const currentPanel = document.getElementById('panel'+currentStep);
+    currentPanel.classList.add('exit');
+    setTimeout(()=>{ currentPanel.classList.remove('active','exit'); }, 350);
+
+    // Enter new
+    setTimeout(()=>{
+      const nextPanel = document.getElementById('panel'+step);
+      nextPanel.classList.add('active');
+    }, 350);
+
+    // Update indicators
+    indicators.forEach((ind, i)=>{
+      ind.classList.remove('active','completed');
+      if(i+1 < step) ind.classList.add('completed');
+      if(i+1 === step) ind.classList.add('active');
+    });
+
+    // Update progress bar
+    const pct = step === 1 ? 33 : step === 2 ? 66 : 100;
+    progressFill.style.width = pct+'%';
+
+    currentStep = step;
+  }
+
+  /* ── Submit ── */
+  function submitForm(){
+    const msg = document.getElementById('message').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if(!msg || !email){ 
+      alert('Please fill in your email and project description.');
+      return;
+    }
+
+    // Hide form panels
+    document.getElementById('panel3').classList.remove('active');
+    document.getElementById('progressFill').style.width = '100%';
+    document.querySelectorAll('.fstep').forEach(s=>s.classList.add('completed'));
+    document.getElementById('form-steps-wrap');
+
+    // Generate ref
+    const ref = 'VC-2025-' + String(Math.floor(1000+Math.random()*9000));
+    document.getElementById('successRef').textContent = 'REF: ' + ref;
+
+    // Show success
+    setTimeout(()=>{
+      document.getElementById('successPanel').classList.add('show');
+    }, 300);
+  }
+
+  /* ── FAQ accordion ── */
+  function toggleFaq(btn){
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    // open clicked if wasn't open
+    if(!isOpen) item.classList.add('open');
+  }
+
+  /* ── Nav scroll ── */
+  window.addEventListener('scroll', ()=>{
+    document.getElementById('mainNav').style.background =
+      window.scrollY > 60 ? 'rgba(5,5,5,0.97)' : 'rgba(5,5,5,0.88)';
+  });
+
+  /* ── Set today's day in hours ── */
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today = days[new Date().getDay()];
+  document.querySelectorAll('.vh-day').forEach(el=>{
+    if(today === 'Saturday' && el.textContent.includes('Saturday')) return; // already marked
+    if(today === 'Sunday' && el.textContent.includes('Sunday')){
+      el.closest('.vh-row').classList.add('today');
+      el.textContent += ' ★ Today';
+    }
+    if(['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(today) && el.textContent.includes('Monday')){
+      el.closest('.vh-row').classList.add('today');
+      const dayName = el.textContent;
+      el.textContent = dayName + ' ★ Today';
+    }
+  });
+</script>
+</body>
+</html>
